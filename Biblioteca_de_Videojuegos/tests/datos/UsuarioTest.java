@@ -21,7 +21,7 @@ public class UsuarioTest {
 	public void testGetApellido() {
 		assertEquals("Apellido",u.getApellido());
 	}
-	
+	  
 	@Test
 	public void testGetEmail() {
 		assertEquals("NM@gmail.com",u.getEmail());
