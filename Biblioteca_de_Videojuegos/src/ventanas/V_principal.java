@@ -9,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JScrollBar;
+import java.awt.GridLayout;
+import javax.swing.JButton;
 
 public class V_principal extends JFrame {
 
@@ -39,13 +41,12 @@ public class V_principal extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.CENTER);
+		JButton btnTienda = new JButton("Tienda");
+		contentPane.add(btnTienda);
 		
-		JScrollBar scrollBar = new JScrollBar();
-		panel.add(scrollBar);
+		
 	}
 
 }

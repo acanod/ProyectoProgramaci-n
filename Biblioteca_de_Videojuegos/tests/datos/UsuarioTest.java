@@ -9,7 +9,7 @@ public class UsuarioTest {
 	private Usuario u;
 	@Before
 	public void setUp() throws Exception {
-		u= new Usuario("Nombre", "Apellido", "NM@gmail.com","Espanya", "nombreapellido33");
+		u= new Usuario("Nombre", "Apellido", "NM@gmail.com","Espanya", "nombreapellido33", 12, 12.63);
 	}
 
 	@Test
@@ -35,5 +35,15 @@ public class UsuarioTest {
 	@Test
 	public void testGetPassword() {
 		assertEquals("nombreapellido33",u.getPassword());
+	}
+	
+	@Test
+	public void testGetNumeroDeJuegos() {
+		assertEquals(12,u.getNumeroDeJuegos());
+	}
+	
+	@Test
+	public void testGetSaldo() {
+		assertEquals(12.63,u.getSaldo());
 	}
 }

@@ -7,18 +7,37 @@ public class Usuario {
 	private String email;
 	private String pais;
 	private String password;
+	private int numeroDeJuegos;
+	private double saldo;
 	
-	public Usuario() {
-		super();
-	}
 	
-	public Usuario(String nombre, String apellido, String email, String pais, String password) {
+
+	
+	public Usuario(String nombre, String apellido, String email, String pais, String password, int numeroDeJuegos, double saldo) {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
 		this.pais = pais;
 		this.password = password;
+		this.numeroDeJuegos = numeroDeJuegos;
+		this.saldo = saldo;
 	}   
+
+	public int getNumeroDeJuegos() {
+		return numeroDeJuegos;
+	}
+
+	public void setNumeroDeJuegos(int numeroDeJuegos) {
+		this.numeroDeJuegos = numeroDeJuegos;
+	}
+
+	public double getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
+	}
 
 	public String getNombre() {
 		return nombre;
