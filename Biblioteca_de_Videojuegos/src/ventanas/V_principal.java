@@ -7,10 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.FlowLayout;
-import javax.swing.JLabel;
-import javax.swing.JScrollBar;
-import java.awt.GridLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 public class V_principal extends JFrame {
 
@@ -41,12 +39,22 @@ public class V_principal extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 5));
 		
 		JButton btnTienda = new JButton("Tienda");
 		contentPane.add(btnTienda);
 		
+		JButton btnBiblioteca = new JButton("Biblioteca");
+		contentPane.add(btnBiblioteca);
 		
+		JButton btnAmigos = new JButton("Amigos");
+		contentPane.add(btnAmigos);
+		
+		JLabel lblSaldo = new JLabel("Saldo: ");
+		contentPane.add(lblSaldo);
+		
+		JLabel label = new JLabel("00,00");
+		contentPane.add(label);
 	}
 
 }
