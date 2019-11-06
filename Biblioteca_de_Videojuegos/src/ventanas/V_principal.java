@@ -7,6 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
@@ -42,6 +45,12 @@ public class V_principal extends JFrame {
 		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 5));
 		
 		JButton btnTienda = new JButton("Tienda");
+		btnTienda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new V_Tienda().setVisible(true);
+				V_principal.this.setVisible(false);
+			}
+		});
 		contentPane.add(btnTienda);
 		
 		JButton btnBiblioteca = new JButton("Biblioteca");
