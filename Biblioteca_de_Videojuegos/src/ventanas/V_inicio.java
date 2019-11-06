@@ -5,8 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class V_inicio extends JFrame {
 
@@ -35,6 +33,7 @@ public class V_inicio extends JFrame {
 		JLabel lnombre = new JLabel("Nombre");
 		JLabel lpassword = new JLabel("Contraseña");
 		JButton bIniciar = new JButton("Iniciar sesión");
+		
 		bIniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//verificacion con la base de datos
