@@ -35,7 +35,7 @@ public class BaseDeDatos {
 		
 		try {
 			Class.forName("org.postgresql.Driver");
-			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Futbol", user, password);
+			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/VideoJuegos", user, password);
 			Statement statement = connection.createStatement();
 
 			statement.executeUpdate("CREATE TABLE IF NOT EXISTS usuario (nombre VARCHAR(35) NOT NULL PRIMARY KEY, apellido CHAR(20) NOT NULL, password VARCHAR(30) NOT NULL, email CHAR(20) NOT NULL,"
