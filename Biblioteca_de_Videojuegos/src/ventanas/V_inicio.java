@@ -28,17 +28,10 @@ public class V_inicio extends JFrame {
 		JPanel panelCentral = new JPanel(new FlowLayout());
 		JPanel panelInfo = new JPanel(new GridLayout(2, 0));
 		JPanel panelBotones = new JPanel(new FlowLayout());
-<<<<<<< HEAD
-
-		// Componentes
-		JTextArea nombre = new JTextArea();
-		JPasswordField password = new JPasswordField();
-=======
 		
 		//Componentes
 		JTextField nombre = new JTextField(35);
 		JPasswordField password = new JPasswordField(35);
->>>>>>> branch 'master' of https://github.com/acanod/ProyectoProgramaci-n.git
 		JLabel lnombre = new JLabel("Nombre");
 		JLabel lpassword = new JLabel("Contraseña");
 		JButton bIniciar = new JButton("Iniciar sesión");
@@ -77,10 +70,7 @@ public class V_inicio extends JFrame {
 		panelBotones.add(bRegistrar);
 		panelBotones.add(bAtras);
 		panelCentral.add(panelInfo);
-<<<<<<< HEAD
-		getContentPane().add(panelCentral, BorderLayout.CENTER);
-		getContentPane().add(panelBotones, BorderLayout.SOUTH);
-=======
+
 		add(panelCentral, BorderLayout.CENTER);
 		add(panelBotones, BorderLayout.SOUTH);
 		
@@ -99,6 +89,5 @@ public class V_inicio extends JFrame {
 			}
 		});
 		
->>>>>>> branch 'master' of https://github.com/acanod/ProyectoProgramaci-n.git
 	}
 }
