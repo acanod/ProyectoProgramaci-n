@@ -4,24 +4,26 @@ public class Usuario {
 
 	private String nombre;
 	private String apellido;
+	private String password;
 	private String email;
 	private String pais;
-	private String password;
 	private int numeroDeJuegos;
 	private double saldo;
 	
-	
-
-	
-	public Usuario(String nombre, String apellido, String email, String pais, String password, int numeroDeJuegos, double saldo) {
+	public Usuario(String nombre, String apellido, String password, String email, String pais, int numeroDeJuegos, double saldo) {
 		this.nombre = nombre;
 		this.apellido = apellido;
+		this.password = password;
 		this.email = email;
 		this.pais = pais;
-		this.password = password;
 		this.numeroDeJuegos = numeroDeJuegos;
 		this.saldo = saldo;
-	}   
+	}  
+	
+	public Usuario(String nombre, String password) {
+		this.nombre = nombre;
+		this.password = password;
+	}
  
 	public int getNumeroDeJuegos() {
 		return numeroDeJuegos;
