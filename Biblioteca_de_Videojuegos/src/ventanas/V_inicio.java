@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import base_de_datos.*;
+import datos.Usuario;
+
 public class V_inicio extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -36,14 +39,10 @@ public class V_inicio extends JFrame {
 		
 		bIniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//verificacion con la base de datos
-				if(nombre.equals("Nombre") && password.equals("Apellido")) {
-					//nombre como argumento de ventana principal por cada cuenta
-					
-					new V_principal( ).setVisible(true);
-					V_inicio.this.setVisible(false);
-					
-				}
+				Usuario iniciar = new Usuario(nombre.getText(), password.getPassword().toString());
+				BaseDeDatos.comprobarLogin(iniciar);
+				new V_principal(iniciar).setVisible(true);
+				V_inicio.this.setVisible(false);
 			}
 		});
 		JButton bRegistrar = new JButton("Registrar");

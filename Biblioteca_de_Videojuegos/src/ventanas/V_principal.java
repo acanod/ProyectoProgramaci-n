@@ -1,11 +1,13 @@
 package ventanas;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import datos.Usuario;
+
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,27 +20,17 @@ public class V_principal extends JFrame {
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					V_principal frame = new V_principal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				} 
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
-	public V_principal() {
+	public V_principal(Usuario usuario) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setSize(Toolkit.getDefaultToolkit().getScreenSize().width / 2,
+				Toolkit.getDefaultToolkit().getScreenSize().height / 4);
+		setLocationRelativeTo(null);
+		setTitle("Página principal de "+usuario.getNombre());
+		setResizable(false);
+		setVisible(true);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
