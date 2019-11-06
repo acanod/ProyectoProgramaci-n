@@ -89,7 +89,7 @@ public class V_Tienda extends JFrame {
 		
 		JButton btnAadirFondos = new JButton("A\u00F1adir Fondos");
 		panel_1.add(btnAadirFondos);
-		
+		  
 		JPanel panelJuegos = new JPanel();
 		panel_3.add(panelJuegos, "cell 0 1 2 1,grow");
 		panelJuegos.setLayout(new MigLayout("", "[][][][][][][][][][][][][][]", "[]"));

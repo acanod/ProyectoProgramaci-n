@@ -27,7 +27,7 @@ public class UsuarioTest {
 		assertEquals("NM@gmail.com",u.getEmail());
 	}
 
-	@Test
+	@Test 
 	public void testGetPais() {
 		assertEquals("Espanya",u.getPais());
 	}

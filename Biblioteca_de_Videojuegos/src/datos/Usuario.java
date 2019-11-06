@@ -22,7 +22,7 @@ public class Usuario {
 		this.numeroDeJuegos = numeroDeJuegos;
 		this.saldo = saldo;
 	}   
-
+ 
 	public int getNumeroDeJuegos() {
 		return numeroDeJuegos;
 	}

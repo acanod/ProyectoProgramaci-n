@@ -30,7 +30,7 @@ public class V_JuegoInfo extends JFrame {
 		});
 	}
 
-	/**
+	/** 
 	 * Create the frame.
 	 */
 	public V_JuegoInfo(Juego j) {
