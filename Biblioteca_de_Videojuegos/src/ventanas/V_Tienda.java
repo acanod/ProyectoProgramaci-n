@@ -60,6 +60,7 @@ public class V_Tienda extends JFrame {
 	 */
 	@SuppressWarnings("null")
 	public V_Tienda(Usuario u) {
+		super("Tienda");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 582, 421);
 		contentPane = new JPanel();
@@ -122,7 +123,7 @@ public class V_Tienda extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {	
 	
-			V_JuegoInfo v = new V_JuegoInfo(juegos.get(0), u).setVisible(true);
+				new V_JuegoInfo(juegos.get(0), u).setVisible(true);
 				
 			}
 		});
@@ -137,7 +138,7 @@ public class V_Tienda extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {		
 		
-				
+				new V_JuegoInfo(juegos.get(1), u).setVisible(true);
 			}
 		});
 		ImageIcon imageIcon2 = new ImageIcon("./img/2.jpg");
@@ -151,7 +152,7 @@ public class V_Tienda extends JFrame {
 		lblJuego3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {		
-		
+				new V_JuegoInfo(juegos.get(2), u).setVisible(true);
 				
 			}
 		});
