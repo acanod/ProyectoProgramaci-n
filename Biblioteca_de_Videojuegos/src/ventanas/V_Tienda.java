@@ -44,7 +44,8 @@ public class V_Tienda extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					V_Tienda frame = new V_Tienda(null);
+					Usuario u = new Usuario("a", "title");
+					V_Tienda frame = new V_Tienda(u);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
