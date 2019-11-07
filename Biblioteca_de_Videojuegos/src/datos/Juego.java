@@ -1,4 +1,5 @@
 package datos;
+import javax.swing.JLabel;
 
 public class Juego {
 	
@@ -7,17 +8,20 @@ public class Juego {
 	private String categoria;
 	private double precio;
 	private boolean prestamo;
+	private JLabel caratula;
+	
 	public Juego() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Juego(String nombre, int edadnecesaria, String categoria, double precio, boolean prestamo) {
+	public Juego(String nombre, int edadnecesaria, String categoria, double precio, boolean prestamo, JLabel caratula) {
 		super();
 		this.nombre = nombre;
 		this.edadnecesaria = edadnecesaria;
 		this.categoria = categoria;
 		this.precio = precio;
 		this.prestamo = prestamo;
+		this.caratula = caratula;
 	}
 	public String getNombre() {
 		return nombre;
@@ -33,7 +37,7 @@ public class Juego {
 	}
 	public String getCategoria() {
 		return categoria;
-	} 
+	}
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
@@ -49,7 +53,16 @@ public class Juego {
 	public void setPrestamo(boolean prestamo) {
 		this.prestamo = prestamo;
 	}
+
+	public JLabel getCaratula() {
+		return caratula;
+	}
+	
+	public void setCaratula(JLabel caratula) {
+		this.caratula=caratula;
+	}
 	
 	
 
 }
+
