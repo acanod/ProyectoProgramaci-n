@@ -4,12 +4,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import datos.Usuario;
+import datos.*;
 
-import java.awt.FlowLayout;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import java.util.*;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -35,11 +36,14 @@ public class V_principal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 5));
+		ArrayList<Usuario> users= new ArrayList<Usuario>();
+		users.add(new Usuario("Ima","Ola","e@opp.es","ESP", "ERT", 0, 00.00));
+		
 		
 		JButton btnTienda = new JButton("Tienda");
 		btnTienda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new V_Tienda().setVisible(true);
+				new V_Tienda(users.get(0)).setVisible(true);
 				V_principal.this.setVisible(false);
 			}
 		});

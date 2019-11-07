@@ -8,7 +8,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import datos.Juego;
+import datos.Usuario;
+
 import javax.swing.JLabel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class V_JuegoInfo extends JFrame {
 
@@ -22,7 +27,7 @@ public class V_JuegoInfo extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					V_JuegoInfo frame = new V_JuegoInfo(null);
+					V_JuegoInfo frame = new V_JuegoInfo(null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,10 +36,12 @@ public class V_JuegoInfo extends JFrame {
 		});
 	}
 
-	/** 
+	/**
 	 * Create the frame.
+	 * @param u 
+	 * @param j 
 	 */
-	public V_JuegoInfo(Juego j) {
+	public V_JuegoInfo(Juego j, Usuario u) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -42,8 +49,21 @@ public class V_JuegoInfo extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		JLabel label = new JLabel(j.getNombre());
-		contentPane.add(label, BorderLayout.CENTER);
+		JLabel precio = new JLabel(j.getNombre());
+		contentPane.add(precio, BorderLayout.CENTER);
+		
+		JButton comprar = new JButton("Comprar");
+		comprar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				u.setSaldo(u.getSaldo()-j.getPrecio());
+				//V_Tienda().repaint();
+			}
+		});
+		contentPane.add(comprar, BorderLayout.SOUTH);
+		
+		JLabel nombre = new JLabel(Double.toString(j.getPrecio()));
+		contentPane.add(nombre, BorderLayout.EAST);
 	}
 
+	
 }
