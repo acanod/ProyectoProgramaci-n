@@ -76,14 +76,14 @@ public class V_inicio extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				char[] contra = password.getPassword();
 				String contr = new String(contra);
-				if(nombre.getText().isBlank() || contr.length()==0) {
-					JOptionPane.showMessageDialog(null, "Escriba en todos los parametros", "Error", JOptionPane.ERROR_MESSAGE);
-				} else {
-					Usuario iniciar = new Usuario(nombre.getText(), password.getPassword().toString());
-					BaseDeDatos.comprobarLogin(iniciar);
-					new V_principal(iniciar).setVisible(true);
-					V_inicio.this.setVisible(false);
-				}
+//				if(nombre.getText().isBlank() || contr.length()==0) {
+//					JOptionPane.showMessageDialog(null, "Escriba en todos los parametros", "Error", JOptionPane.ERROR_MESSAGE);
+//				} else {
+//						Usuario iniciar = new Usuario(null, null, null, null, null, 0, 0.0, null);
+//					BaseDeDatos.comprobarLogin(iniciar);
+//					new V_principal(iniciar).setVisible(true);
+//					V_inicio.this.setVisible(false);
+//				}
 			}
 		});
 		

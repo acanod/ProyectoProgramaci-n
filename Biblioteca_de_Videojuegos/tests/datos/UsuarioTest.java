@@ -7,9 +7,10 @@ import org.junit.Test;
 
 public class UsuarioTest {
 	private Usuario u;
+	
 	@Before
 	public void setUp() throws Exception {
-		u= new Usuario("Nombre", "Apellido", "NM@gmail.com","Espanya", "nombreapellido33", 12, 12.63);
+		u= new Usuario("Nombre", "Apellido", "NM@gmail.com","Espanya", "nombreapellido33", 12, 12.63,null);
 	}
 
 	@Test
@@ -44,6 +45,6 @@ public class UsuarioTest {
 	
 	@Test
 	public void testGetSaldo() {
-		assertEquals(12.63,u.getSaldo());
+		assertEquals(12.12,u.getSaldo());
 	}
 }

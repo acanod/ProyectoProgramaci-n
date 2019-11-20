@@ -1,30 +1,34 @@
 package datos;
 
+import javax.swing.JLabel;
+
 public class Usuario {
 
 	private String nombre;
 	private String apellido;
-	private String password;
 	private String email;
 	private String pais;
+	private String password;
 	private int numeroDeJuegos;
 	private double saldo;
+	private String[] juegosComprados;
 	
-	public Usuario(String nombre, String apellido, String password, String email, String pais, int numeroDeJuegos, double saldo) {
+	
+
+	
+	public Usuario(String nombre, String apellido, String email, String pais, String password, int numeroDeJuegos, double saldo, String[] juegosComprados) {
+		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.password = password;
 		this.email = email;
 		this.pais = pais;
+		this.password = password;
 		this.numeroDeJuegos = numeroDeJuegos;
 		this.saldo = saldo;
-	}  
-	
-	public Usuario(String nombre, String password) {
-		this.nombre = nombre;
-		this.password = password;
-	}
- 
+		this.juegosComprados= juegosComprados;
+	}   
+
+
 	public int getNumeroDeJuegos() {
 		return numeroDeJuegos;
 	}
@@ -81,4 +85,11 @@ public class Usuario {
 		this.password = password;
 	}
 	
+	public String[] getJuegosComprados() {
+		return juegosComprados;
+	}
+	
+	public void setJuegosComprados(int index, String juegosComprados) {
+		this.juegosComprados[index]=juegosComprados;
+	}
 }

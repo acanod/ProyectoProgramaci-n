@@ -11,13 +11,13 @@ import datos.Juego;
 import datos.Usuario;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class V_JuegoInfo extends JFrame {
 
-	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**
@@ -38,10 +38,9 @@ public class V_JuegoInfo extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @param u 
-	 * @param j 
 	 */
 	public V_JuegoInfo(Juego j, Usuario u) {
+		setTitle(j.getNombre());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -55,8 +54,30 @@ public class V_JuegoInfo extends JFrame {
 		JButton comprar = new JButton("Comprar");
 		comprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				u.setSaldo(u.getSaldo()-j.getPrecio());
-				//V_Tienda().repaint();
+				for(int i=0;i<u.getJuegosComprados().length;i++) {
+					if((u.getJuegosComprados()[i]==(j.getNombre()))) {
+						JFrame f;   
+					    f=new JFrame();  
+					    JOptionPane.showMessageDialog(f,"Ya tienes este juego.");
+					    break;
+					}else {
+					if(u.getSaldo()<j.getPrecio()) {
+					JFrame f;   
+				    f=new JFrame();  
+				    JOptionPane.showMessageDialog(f,"No tienes suficiente dinero para comprar este juego"); 
+				    break;
+				}else {
+					u.setSaldo(u.getSaldo()-j.getPrecio());
+					u.setJuegosComprados(i,j.getNombre());
+					JFrame f;   
+				    f=new JFrame();  
+				    JOptionPane.showMessageDialog(f,"Has comprado "+j.getNombre());
+				    break;
+					
+				}
+				
+				    }
+					 }
 			}
 		});
 		contentPane.add(comprar, BorderLayout.SOUTH);
@@ -65,5 +86,4 @@ public class V_JuegoInfo extends JFrame {
 		contentPane.add(nombre, BorderLayout.EAST);
 	}
 
-	
 }

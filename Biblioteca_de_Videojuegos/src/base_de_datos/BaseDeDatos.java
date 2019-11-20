@@ -227,10 +227,10 @@ public class BaseDeDatos {
 			ps.setString(2, usuario.getPassword());
 			
 			rs = ps.executeQuery(consulta);
-			Usuario registrado = new Usuario(usuario.getNombre(), usuario.getPassword());
+	//		Usuario registrado = new Usuario(usuario.getNombre(), usuario.getPassword());
 			rs.close();
 			log(Level.INFO, "Nombre y contraseña de "+usuario.getNombre()+" correctos", null);
-			return registrado;
+			return null;
 		}catch (SQLException e) {
 			log(Level.SEVERE, "Error en nombre y contraseña " + usuario.getNombre(), e);
 			return null;

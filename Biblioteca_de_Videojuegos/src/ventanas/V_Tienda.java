@@ -1,6 +1,5 @@
 package ventanas;
 
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -11,18 +10,21 @@ import javax.swing.border.EmptyBorder;
 import datos.Juego;
 import datos.Usuario;
 
+import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import net.miginfocom.swing.MigLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JScrollBar;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
@@ -33,7 +35,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class V_Tienda extends JFrame {
 
-	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
 
@@ -44,8 +45,7 @@ public class V_Tienda extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Usuario u = new Usuario("a", "title");
-					V_Tienda frame = new V_Tienda(u);
+					V_Tienda frame = new V_Tienda(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,9 +57,9 @@ public class V_Tienda extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	@SuppressWarnings("null")
+	
 	public V_Tienda(Usuario u) {
-		super("Tienda");
+		setTitle ("Tienda");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 582, 421);
 		contentPane = new JPanel();
@@ -120,9 +120,8 @@ public class V_Tienda extends JFrame {
 		JLabel lblJuego = new JLabel("");
 		lblJuego.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {	
-	
-				new V_JuegoInfo(juegos.get(0), u).setVisible(true);
+			public void mouseClicked(MouseEvent arg0) {		
+				new V_JuegoInfo(juegos.get(0),u).setVisible(true);
 				
 			}
 		});
@@ -136,8 +135,8 @@ public class V_Tienda extends JFrame {
 		lblJuego2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {		
-		
-				new V_JuegoInfo(juegos.get(1), u).setVisible(true);
+				new V_JuegoInfo(juegos.get(1),u).setVisible(true);
+				
 			}
 		});
 		ImageIcon imageIcon2 = new ImageIcon("./img/2.jpg");
@@ -151,7 +150,7 @@ public class V_Tienda extends JFrame {
 		lblJuego3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {		
-				new V_JuegoInfo(juegos.get(2), u).setVisible(true);
+				new V_JuegoInfo(juegos.get(2),u).setVisible(true);
 				
 			}
 		});
@@ -239,15 +238,24 @@ public class V_Tienda extends JFrame {
 		
 		JLabel lblBuscarPorCategoria = new JLabel("Categoria");
 		lblBuscarPorCategoria.setVerticalAlignment(SwingConstants.TOP);
+		
+		JButton btnAtras = new JButton("Atras");
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			new V_principal(u).setVisible(true);
+			V_Tienda.this.dispose();	
+			}
+		});
 		GroupLayout gl_panelBuscar = new GroupLayout(panelBuscar);
 		gl_panelBuscar.setHorizontalGroup(
 			gl_panelBuscar.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelBuscar.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panelBuscar.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblBuscarPorCategoria, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+						.addComponent(lblBuscarPorCategoria, GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
 						.addComponent(btnNewButton)
-						.addComponent(comboBox, 0, 93, Short.MAX_VALUE))
+						.addComponent(comboBox, 0, 120, Short.MAX_VALUE)
+						.addComponent(btnAtras, Alignment.TRAILING))
 					.addContainerGap())
 		);
 		gl_panelBuscar.setVerticalGroup(
@@ -259,11 +267,12 @@ public class V_Tienda extends JFrame {
 					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(37)
 					.addComponent(btnNewButton)
-					.addGap(216))
+					.addGap(157)
+					.addComponent(btnAtras)
+					.addGap(36))
 		);
 		panelBuscar.setLayout(gl_panelBuscar);
 		
 
 	}
 }
-
