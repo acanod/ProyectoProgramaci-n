@@ -30,13 +30,8 @@ public class BaseDeDatos {
 	 * @throws SQLException 
 	 */
 	public static boolean conectarBD() {
-		/*String user = "postgres";
-		String password = "proyectoProgramacion";*/
-		/*//localhost:3306/*/
-		
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql:videojuegos");
+			connection = DriverManager.getConnection("jdbc:sqlite:videojuegos");
 			Statement statement = connection.createStatement();
 
 			statement.executeUpdate("CREATE TABLE IF NOT EXISTS usuario (nombre VARCHAR(35) NOT NULL PRIMARY KEY, apellido CHAR(20) NOT NULL, password VARCHAR(30) NOT NULL, email CHAR(20) NOT NULL,"
@@ -47,7 +42,7 @@ public class BaseDeDatos {
 			
 			log(Level.INFO, "Base de datos conectada", null);
 			return true;
-		} catch(ClassNotFoundException | SQLException e) {
+		} catch(SQLException e) {
 			log(Level.SEVERE, "Error en conexión de base de datos", e);
 			return false;
 		}

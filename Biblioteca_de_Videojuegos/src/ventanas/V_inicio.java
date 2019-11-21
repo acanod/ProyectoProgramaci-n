@@ -15,6 +15,18 @@ public class V_inicio extends JFrame {
 	private JTextField nombre;
 	private JPasswordField password;
 
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					new V_inicio();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 	public V_inicio() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(Toolkit.getDefaultToolkit().getScreenSize().width / 2,
@@ -29,41 +41,66 @@ public class V_inicio extends JFrame {
 	private void componentes() {
 		// Contenedores
 		JPanel panelTexto = new JPanel();
-		JPanel panelLabels = new JPanel();
+		panelTexto.setLayout(new GridBagLayout());
 		JPanel panelBotones = new JPanel(new FlowLayout());
 		
-		panelTexto.setLayout(new BoxLayout(panelTexto, BoxLayout.Y_AXIS));
-		panelLabels.setLayout(new BoxLayout(panelLabels, BoxLayout.Y_AXIS));
+		GridBagConstraints constraints = new GridBagConstraints();
 		
-		panelTexto.setMinimumSize(new Dimension().getSize());
+		JLabel lnombre = new JLabel("Nombre");
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.weighty = 0.05;
+		panelTexto.add(lnombre, constraints);
+		constraints.weighty = 0.0;
+		
+		JLabel lpassword = new JLabel("Contraseña");
+		constraints.gridx = 0;
+		constraints.gridy = 1;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.weighty = 0.05;
+		panelTexto.add(lpassword, constraints);
+		constraints.weighty = 0.0;
 		
 		nombre = new JTextField(30);
-		password = new JPasswordField(30);
+		constraints.gridx = 2;
+		constraints.gridy = 0;
+		constraints.gridwidth = 2;
+		constraints.gridheight = 1;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.weightx = 1.0;
+		constraints.weighty = 0.05;
+		panelTexto.add(nombre, constraints);
+		constraints.fill = GridBagConstraints.NONE;
+		constraints.weightx = 0.0;
+		constraints.weighty = 0.0;
 		
-		nombre.setMinimumSize(new Dimension().getSize());
+		password = new JPasswordField(30);
+		constraints.gridx = 2;
+		constraints.gridy = 1;
+		constraints.gridwidth = 3;
+		constraints.gridheight = 1;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.weightx = 1.0;
+		constraints.weighty = 0.05;
+		panelTexto.add(password, constraints);
+		constraints.fill = GridBagConstraints.NONE;
+		constraints.weightx = 0.0;
+		constraints.weighty = 0.0;
+		
 		JButton bIniciar = new JButton("Iniciar sesión");
 		JButton bRegistrar = new JButton("Registrar");
 		JButton bAtras = new JButton("Atrás");
 		
-		JLabel lpassword = new JLabel("Contraseña");
-		JLabel lnombre = new JLabel("Nombre");
-		
-		panelTexto.add(nombre);
-		panelTexto.add(password);
-		
-		float y = panelLabels.getAlignmentY();
-		panelLabels.add(lnombre, y/3);
-		panelLabels.add(lpassword, y);
 		
 		panelBotones.add(bIniciar);
 		panelBotones.add(bRegistrar);
 		panelBotones.add(bAtras);
 
 		getContentPane().add(panelTexto, BorderLayout.CENTER);
-		getContentPane().add(panelLabels, BorderLayout.WEST);
 		getContentPane().add(panelBotones, BorderLayout.SOUTH);
-		
-		//panelCentral.setLayout(gl_panelCentral);
 		
 		bRegistrar.addActionListener(new ActionListener() {
 			@Override
@@ -76,14 +113,14 @@ public class V_inicio extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				char[] contra = password.getPassword();
 				String contr = new String(contra);
-//				if(nombre.getText().isBlank() || contr.length()==0) {
-//					JOptionPane.showMessageDialog(null, "Escriba en todos los parametros", "Error", JOptionPane.ERROR_MESSAGE);
-//				} else {
-//						Usuario iniciar = new Usuario(null, null, null, null, null, 0, 0.0, null);
-//					BaseDeDatos.comprobarLogin(iniciar);
-//					new V_principal(iniciar).setVisible(true);
-//					V_inicio.this.setVisible(false);
-//				}
+				if(nombre.getText().isBlank() || contr.length()==0) {
+					JOptionPane.showMessageDialog(null, "Escriba en todos los parametros", "Error", JOptionPane.ERROR_MESSAGE);
+				} else {
+						Usuario iniciar = new Usuario(null, null, null, null, null, 0, 0.0, null);
+					BaseDeDatos.comprobarLogin(iniciar);
+					new V_principal(iniciar).setVisible(true);
+					V_inicio.this.setVisible(false);
+				}
 			}
 		});
 		

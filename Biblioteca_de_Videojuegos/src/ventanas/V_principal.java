@@ -1,59 +1,37 @@
 package ventanas;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import datos.Juego;
 import datos.Usuario;
 
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class V_principal extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-//	public List<Usuario> users= new ArrayList<Usuario>(new Usuario("Ima","Ola","e@opp.es","ESP", "ERT", 0, 30.00));
-//	public Usuario u=new Usuario("Ima","Ola","e@opp.es","ESP", "ERT", 0, 30.00);
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					V_principal frame = new V_principal(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 * @param u 
 	 */
 	public V_principal(Usuario u) {
-		setTitle("Inicio");
+		setTitle("Pagina principal");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setSize(Toolkit.getDefaultToolkit().getScreenSize().width/3, Toolkit.getDefaultToolkit().getScreenSize().height/2);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 5));
-
-		
-		
 		
 		JButton btnTienda = new JButton("Tienda");
 		btnTienda.addActionListener(new ActionListener() {
