@@ -1,7 +1,5 @@
 package datos;
 
-import javax.swing.JLabel;
-
 public class Usuario {
 
 	private String nombre;
@@ -13,8 +11,20 @@ public class Usuario {
 	private double saldo;
 	private String[] juegosComprados;
 	
+	public Usuario(String nombre, String password) {
+		this.nombre = nombre;
+		this.password = password;
+	}
 	
-
+	public Usuario(String nombre, String apellido, String email, String pais, String password) {
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.pais = pais;
+		this.password = password;
+		this.numeroDeJuegos = 0;
+		this.saldo = 50;
+	}
 	
 	public Usuario(String nombre, String apellido, String email, String pais, String password, int numeroDeJuegos, double saldo, String[] juegosComprados) {
 		super();
@@ -27,7 +37,6 @@ public class Usuario {
 		this.saldo = saldo;
 		this.juegosComprados= juegosComprados;
 	}   
-
 
 	public int getNumeroDeJuegos() {
 		return numeroDeJuegos;

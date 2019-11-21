@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 
 import datos.Usuario;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
@@ -18,6 +19,8 @@ public class V_principal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JPanel botones;
+	private JButton btnTienda;
 
 	/**
 	 * Create the frame.
@@ -33,7 +36,13 @@ public class V_principal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 5));
 		
-		JButton btnTienda = new JButton("Tienda");
+		botones = new JPanel();
+		getContentPane().add(botones, BorderLayout.SOUTH);
+		
+		JButton atras = new JButton("Atras");
+		botones.add(atras);
+		
+		btnTienda = new JButton("Tienda");
 		btnTienda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				new V_Tienda(u).setVisible(true);

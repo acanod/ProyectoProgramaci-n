@@ -14,18 +14,6 @@ public class V_inicio extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField nombre;
 	private JPasswordField password;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					new V_inicio();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	
 	public V_inicio() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -116,7 +104,7 @@ public class V_inicio extends JFrame {
 				if(nombre.getText().isBlank() || contr.length()==0) {
 					JOptionPane.showMessageDialog(null, "Escriba en todos los parametros", "Error", JOptionPane.ERROR_MESSAGE);
 				} else {
-						Usuario iniciar = new Usuario(null, null, null, null, null, 0, 0.0, null);
+					Usuario iniciar = new Usuario(nombre.getText(), contr);
 					BaseDeDatos.comprobarLogin(iniciar);
 					new V_principal(iniciar).setVisible(true);
 					V_inicio.this.setVisible(false);

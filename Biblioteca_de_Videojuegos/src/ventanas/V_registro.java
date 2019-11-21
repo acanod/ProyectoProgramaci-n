@@ -7,23 +7,18 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import base_de_datos.BaseDeDatos;
+import datos.Usuario;
+
 public class V_registro extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 	private String[] listaPais = {"Alemania", "España", "Francia", "Italia", "Portugal"};
 	private final ArrayList<String> paises = new ArrayList<String>();
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					new V_registro();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JTextField nombre;
+	private JTextField apellido;
+	private JTextField email;
+	private JComboBox<String> pais;
 	
 	public V_registro() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,7 +66,7 @@ public class V_registro extends JFrame{
 		getContentPane().add(lnombre, constraints);
 		constraints.weighty = 0.0;
 		
-		JTextField nombre = new JTextField();
+		nombre = new JTextField();
 		constraints.gridx = 2;
 		constraints.gridy = 0;
 		constraints.gridwidth = 2;
@@ -93,7 +88,7 @@ public class V_registro extends JFrame{
 		getContentPane().add(lapellido, constraints);
 		constraints.weighty = 0.0;
 		
-		JTextField apellido = new JTextField();
+		apellido = new JTextField();
 		constraints.gridx = 2;
 		constraints.gridy = 1;
 		constraints.gridwidth = 3;
@@ -115,7 +110,7 @@ public class V_registro extends JFrame{
 		getContentPane().add(lemail, constraints);
 		constraints.weighty = 0.0;
 		
-		JTextField email = new JTextField();
+		email = new JTextField();
 		constraints.gridx = 2;
 		constraints.gridy = 2;
 		constraints.gridwidth = 3;
@@ -140,7 +135,7 @@ public class V_registro extends JFrame{
 		for (int i = 0; i < listaPais.length; i++) {
 			paises.add(listaPais[i]);
 		}
-		JComboBox<String> pais = new JComboBox<String>();
+		pais = new JComboBox<String>();
 		for(int i = 0; i < paises.size(); i++) {
 			pais.addItem(paises.get(i));
 		}
@@ -181,7 +176,16 @@ public class V_registro extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				pais.getSelectedItem();
+				char[] contra = password.getPassword();
+				String contr = new String(contra);
+				Usuario registrar = new Usuario(nombre.getText(), apellido.getText(), email.getText(),
+						pais.getSelectedItem().toString(), contr);
+				if(BaseDeDatos.insertarUsuario(registrar)) {
+					V_registro.this.setVisible(false);
+					new V_principal(registrar);
+				} else {
+					JOptionPane.showMessageDialog(null,"Error a la hora de añadir el usuario");
+				}
 			}
 		});
 		
