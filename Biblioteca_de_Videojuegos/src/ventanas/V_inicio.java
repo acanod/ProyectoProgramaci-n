@@ -105,8 +105,7 @@ public class V_inicio extends JFrame {
 					JOptionPane.showMessageDialog(null, "Escriba en todos los parametros", "Error", JOptionPane.ERROR_MESSAGE);
 				} else {
 					Usuario iniciar = new Usuario(nombre.getText(), contr);
-					BaseDeDatos.comprobarLogin(iniciar);
-					new V_principal(iniciar).setVisible(true);
+					new V_principal(BaseDeDatos.comprobarLogin(iniciar)).setVisible(true);
 					V_inicio.this.setVisible(false);
 				}
 			}
