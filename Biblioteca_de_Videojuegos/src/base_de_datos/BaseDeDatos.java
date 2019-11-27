@@ -97,7 +97,8 @@ public class BaseDeDatos {
 		    ps.setDouble(7, usuario.getSaldo());
 			
 			ps.setQueryTimeout(30);
-			ps.executeUpdate(consulta);
+			ps.executeUpdate();
+			ps.close();
 			log(Level.INFO, usuario + "añadido a la base de datos", null);
 			return true;
 		}catch (SQLException e) {
@@ -200,7 +201,7 @@ public class BaseDeDatos {
 		    ps.setDouble(4, juego.getPrecio());
 		    ps.setBoolean(5, juego.isPrestamo()); 
 
-			ps.executeUpdate(consulta);
+			ps.executeUpdate();
 			log(Level.INFO, juego + "añadido a la base de datos", null);
 			return true;
 		} catch (SQLException e) {
@@ -216,15 +217,16 @@ public class BaseDeDatos {
 	 */
 	public static Usuario comprobarLogin(Usuario usuario) {
 		try {
-			String consulta ="SELECT * FROM usuario WHERE nombre = ? AND contraseña = ?;";
+			String consulta ="SELECT * FROM usuario WHERE nombre = ? AND password = ?;";
 			PreparedStatement ps = connection.prepareStatement(consulta);
 			ps.setString(1, usuario.getNombre());
 			ps.setString(2, usuario.getPassword());
 			
-			rs = ps.executeQuery(consulta);
+			rs = ps.executeQuery();
 			Usuario registrado = new Usuario(usuario.getNombre(), usuario.getPassword());
 			rs.close();
 			log(Level.INFO, "Nombre y contraseña de "+usuario.getNombre()+" correctos", null);
+			ps.close();
 			return registrado;
 		}catch (SQLException e) {
 			log(Level.SEVERE, "Error en nombre y contraseña " + usuario.getNombre(), e);

@@ -16,17 +16,17 @@ public class Usuario {
 		this.password = password;
 	}
 	
-	public Usuario(String nombre, String apellido, String email, String pais, String password) {
+	public Usuario(String nombre, String apellido, String password, String email, String pais, int numJuegos, double saldo) {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
 		this.pais = pais;
 		this.password = password;
-		this.numeroDeJuegos = 0;
-		this.saldo = 50;
+		this.numeroDeJuegos = numJuegos;
+		this.saldo = saldo;
 	}
 	
-	public Usuario(String nombre, String apellido, String email, String pais, String password, int numeroDeJuegos, double saldo, String[] juegosComprados) {
+	public Usuario(String nombre, String apellido, String password, String email, String pais, int numeroDeJuegos, double saldo, String[] juegosComprados) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
