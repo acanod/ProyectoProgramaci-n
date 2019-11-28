@@ -10,21 +10,19 @@ import javax.swing.border.EmptyBorder;
 import datos.Juego;
 import datos.Usuario;
 
-import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import net.miginfocom.swing.MigLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JScrollBar;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
@@ -35,6 +33,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class V_Tienda extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
 
@@ -61,7 +60,8 @@ public class V_Tienda extends JFrame {
 	public V_Tienda(Usuario u) {
 		setTitle ("Tienda");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 582, 421);
+		setSize(Toolkit.getDefaultToolkit().getScreenSize().width/2, Toolkit.getDefaultToolkit().getScreenSize().height/2);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -161,8 +161,6 @@ public class V_Tienda extends JFrame {
 		lblJuego3.setIcon(imageIcon3);
 		
 		JLabel lblJuego4 = new JLabel("");
-		
-		JLabel lblJuego5 = new JLabel("");
 		
 		juegos.add(new Juego("Assasins Creed Origins", 16,"Aventura",50.00,false,lblJuego));
 		juegos.add(new Juego("Fifa 20", 12,"Deportes",60.00,false,lblJuego2));

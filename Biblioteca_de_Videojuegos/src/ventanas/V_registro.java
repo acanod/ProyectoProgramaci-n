@@ -51,7 +51,7 @@ public class V_registro extends JFrame{
 		constraints.gridy = 4;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
-		constraints.anchor = GridBagConstraints.PAGE_END;
+		constraints.anchor = GridBagConstraints.LAST_LINE_END;
 		constraints.weighty = 0.05;
 		this.getContentPane().add (atras, constraints);
 		constraints.anchor = GridBagConstraints.CENTER;

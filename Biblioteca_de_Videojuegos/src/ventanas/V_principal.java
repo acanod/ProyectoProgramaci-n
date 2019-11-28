@@ -33,14 +33,22 @@ public class V_principal extends JFrame {
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
+		getContentPane().add(contentPane, BorderLayout.NORTH);
 		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 5));
 		
 		botones = new JPanel();
 		getContentPane().add(botones, BorderLayout.SOUTH);
 		
-		JButton atras = new JButton("Atras");
-		botones.add(atras);
+		JButton btnAtras = new JButton("Atras");
+		botones.add(btnAtras);
+		btnAtras.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new V_inicio();
+				V_principal.this.dispose();
+			}
+		});
 		
 		btnTienda = new JButton("Tienda");
 		btnTienda.addActionListener(new ActionListener() {
@@ -56,6 +64,14 @@ public class V_principal extends JFrame {
 		
 		JButton btnAmigos = new JButton("Amigos");
 		contentPane.add(btnAmigos);
+		btnAmigos.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new V_Amigos(u);
+				V_principal.this.dispose();
+			}
+		});
 		
 		JLabel lblSaldo = new JLabel("Saldo: ");
 		contentPane.add(lblSaldo);
