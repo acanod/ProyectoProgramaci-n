@@ -1,5 +1,7 @@
 package datos;
 
+import java.util.List;
+
 public class Usuario {
 
 	private String nombre;
@@ -9,24 +11,14 @@ public class Usuario {
 	private String password;
 	private int numeroDeJuegos;
 	private double saldo;
-	private String[] juegosComprados;
+	private List<Juego> juegosComprados;
 	
 	public Usuario(String nombre, String password) {
 		this.nombre = nombre;
 		this.password = password;
 	}
 	
-	public Usuario(String nombre, String apellido, String password, String email, String pais, int numJuegos, double saldo) {
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.email = email;
-		this.pais = pais;
-		this.password = password;
-		this.numeroDeJuegos = numJuegos;
-		this.saldo = saldo;
-	}
-	
-	public Usuario(String nombre, String apellido, String password, String email, String pais, int numeroDeJuegos, double saldo, String[] juegosComprados) {
+	public Usuario(String nombre, String apellido, String email, String pais, String password, int numeroDeJuegos, double saldo, List<Juego> juegosComprados) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -37,6 +29,7 @@ public class Usuario {
 		this.saldo = saldo;
 		this.juegosComprados= juegosComprados;
 	}   
+
 
 	public int getNumeroDeJuegos() {
 		return numeroDeJuegos;
@@ -94,11 +87,11 @@ public class Usuario {
 		this.password = password;
 	}
 	
-	public String[] getJuegosComprados() {
+	public List<Juego> getJuegosComprados() {
 		return juegosComprados;
 	}
 	
-	public void setJuegosComprados(int index, String juegosComprados) {
-		this.juegosComprados[index]=juegosComprados;
+	public void setJuegosComprados(int index, Juego juegosComprados) {
+		this.juegosComprados.add(index, juegosComprados);
 	}
 }
