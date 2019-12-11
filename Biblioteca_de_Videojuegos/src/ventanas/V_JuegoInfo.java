@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 
 public class V_JuegoInfo extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**
@@ -54,8 +55,8 @@ public class V_JuegoInfo extends JFrame {
 		JButton comprar = new JButton("Comprar");
 		comprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for(int i=0;i<u.getJuegosComprados().length;i++) {
-					if((u.getJuegosComprados()[i]==(j.getNombre()))) {
+				for(int i=0;i<u.getJuegosComprados().size();i++) {
+					if((u.getJuegosComprados().get(i).getNombre()==(j.getNombre()))) {
 						JFrame f;   
 					    f=new JFrame();  
 					    JOptionPane.showMessageDialog(f,"Ya tienes este juego.");
@@ -68,7 +69,7 @@ public class V_JuegoInfo extends JFrame {
 				    break;
 				}else {
 					u.setSaldo(u.getSaldo()-j.getPrecio());
-					u.setJuegosComprados(i,j.getNombre());
+					u.setJuegosComprados(i, j);
 					JFrame f;   
 				    f=new JFrame();  
 				    JOptionPane.showMessageDialog(f,"Has comprado "+j.getNombre());

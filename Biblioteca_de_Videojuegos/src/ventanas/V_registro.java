@@ -179,7 +179,7 @@ public class V_registro extends JFrame{
 				char[] contra = password.getPassword();
 				String contr = new String(contra);
 				Usuario registrar = new Usuario(nombre.getText(), apellido.getText(),contr, email.getText(),
-						pais.getSelectedItem().toString(), 0, 50);
+						pais.getSelectedItem().toString(), 0, 50, null);
 				if(BaseDeDatos.insertarUsuario(registrar)) {
 					V_registro.this.setVisible(false);
 					new V_principal(registrar);

@@ -213,7 +213,7 @@ public class V_Tienda extends JFrame {
 		JPanel panelBuscar = new JPanel();
 		panel_3.add(panelBuscar, "cell 3 1,grow");
 		
-		JComboBox comboBox = new JComboBox(categorias);
+		JComboBox<String> comboBox = new JComboBox<String>(categorias);
 		
 		JButton btnNewButton = new JButton("Buscar");
 		btnNewButton.addActionListener(new ActionListener() {
