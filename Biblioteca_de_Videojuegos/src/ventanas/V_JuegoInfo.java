@@ -1,4 +1,4 @@
-package pruebasProyectop3;
+package ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
