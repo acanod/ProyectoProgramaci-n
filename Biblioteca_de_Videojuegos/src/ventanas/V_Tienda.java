@@ -1,4 +1,4 @@
-package ventanas;
+package pruebasProyectop3;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -16,8 +16,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import net.miginfocom.swing.MigLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -33,9 +33,9 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class V_Tienda extends JFrame {
 
-	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField comp;
+	public JLabel fondos = new JLabel("");
 
 	/**
 	 * Launch the application.
@@ -56,192 +56,224 @@ public class V_Tienda extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	
+
 	public V_Tienda(Usuario u) {
-		setTitle ("Tienda");
+		setTitle("Tienda");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(Toolkit.getDefaultToolkit().getScreenSize().width/2, Toolkit.getDefaultToolkit().getScreenSize().height/2);
-		setLocationRelativeTo(null);
+		setBounds(100, 100, 640, 421);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		List<Juego> juegos= new ArrayList<Juego>();
-	
-		
-		String[] categorias = {"Todos", "Deportes","Aventura","Estrategia"};
-		
+
+		List<Juego> juegos = new ArrayList<Juego>();
+
+		String[] categorias = { "Todos", "Deportes", "Aventura", "Estrategia", "Acción" };
+
 		JPanel panel_3 = new JPanel();
-		contentPane.add(panel_3);
-		panel_3.setLayout(new MigLayout("", "[208px,grow][129px][][113px,grow]", "[33px][grow]"));
-		
+
 		JPanel panel_2 = new JPanel();
-		panel_3.add(panel_2, "cell 0 0,alignx left,aligny top");
-		
-		textField = new JTextField();
-		panel_2.add(textField);
-		textField.setColumns(10);
-		
-		
-		
-		JPanel panel = new JPanel();
-		panel_3.add(panel, "cell 1 0,alignx left,aligny center");
-		
-		JLabel lblSaldoDisponible = new JLabel("Saldo disponible: ");
-		panel.add(lblSaldoDisponible);
-		
-		
-		JLabel fondos = new JLabel(Double.toString(u.getSaldo()));
-		panel.add(fondos);
-		
-		JPanel panel_1 = new JPanel();
-		panel_3.add(panel_1, "cell 3 0,alignx left,aligny top");
-		
-		JButton btnAadirFondos = new JButton("A\u00F1adir Fondos");
-		btnAadirFondos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(u.getSaldo()<500) {
-					u.setSaldo(u.getSaldo()+10);
-				fondos.setText(Double.toString(u.getSaldo()));
-				}else {
-					JFrame f;   
-					    f=new JFrame();  
-					    JOptionPane.showMessageDialog(f,"No puedes añadir mas de 500 euros"); 
-				}
-				
-			}
-		});
-		panel_1.add(btnAadirFondos);
-		
-		JPanel panelJuegos = new JPanel();
-		panel_3.add(panelJuegos, "cell 0 1 2 1,grow");
-		
+
+		comp = new JTextField();
+		comp.setColumns(10);
+
 		JLabel lblJuego = new JLabel("");
 		lblJuego.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {		
-				new V_JuegoInfo(juegos.get(0),u).setVisible(true);
-				
+			public void mouseClicked(MouseEvent arg0) {
+				new V_JuegoInfo(juegos.get(0), u, V_Tienda.this).setVisible(true);
+
 			}
 		});
 		ImageIcon imageIcon = new ImageIcon("./img/1.jpg");
 		Image image = imageIcon.getImage();
-		Image newimg = image.getScaledInstance(100, 120,  java.awt.Image.SCALE_SMOOTH); 
-		imageIcon = new ImageIcon(newimg);  
+		Image newimg = image.getScaledInstance(100, 120, java.awt.Image.SCALE_SMOOTH);
+		imageIcon = new ImageIcon(newimg);
 		lblJuego.setIcon(imageIcon);
-		
+
 		JLabel lblJuego2 = new JLabel("");
 		lblJuego2.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {		
-				new V_JuegoInfo(juegos.get(1),u).setVisible(true);
-				
+			public void mouseClicked(MouseEvent arg0) {
+				new V_JuegoInfo(juegos.get(1), u, V_Tienda.this).setVisible(true);
+
 			}
 		});
 		ImageIcon imageIcon2 = new ImageIcon("./img/2.jpg");
 		Image image2 = imageIcon2.getImage();
-		Image newimg2 = image2.getScaledInstance(100, 120,  java.awt.Image.SCALE_SMOOTH); 
-		imageIcon2 = new ImageIcon(newimg2);  
+		Image newimg2 = image2.getScaledInstance(100, 120, java.awt.Image.SCALE_SMOOTH);
+		imageIcon2 = new ImageIcon(newimg2);
 		lblJuego2.setIcon(imageIcon2);
-		
-		
+
 		JLabel lblJuego3 = new JLabel("");
 		lblJuego3.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {		
-				new V_JuegoInfo(juegos.get(2),u).setVisible(true);
-				
+			public void mouseClicked(MouseEvent arg0) {
+				new V_JuegoInfo(juegos.get(2), u, V_Tienda.this).setVisible(true);
+
 			}
 		});
 		ImageIcon imageIcon3 = new ImageIcon("./img/3.jpg");
 		Image image3 = imageIcon3.getImage();
-		Image newimg3 = image3.getScaledInstance(100, 120,  java.awt.Image.SCALE_SMOOTH); 
-		imageIcon3 = new ImageIcon(newimg3);  
+		Image newimg3 = image3.getScaledInstance(100, 120, java.awt.Image.SCALE_SMOOTH);
+		imageIcon3 = new ImageIcon(newimg3);
 		lblJuego3.setIcon(imageIcon3);
-		
-		JLabel lblJuego4 = new JLabel("");
-		
-		juegos.add(new Juego("Assasins Creed Origins", 16,"Aventura",50.00,false,lblJuego));
-		juegos.add(new Juego("Fifa 20", 12,"Deportes",60.00,false,lblJuego2));
-		juegos.add(new Juego("Total War Shogun 2", 16,"Estrategia",30.00,false,lblJuego3));
-		GroupLayout gl_panelJuegos = new GroupLayout(panelJuegos);
-		gl_panelJuegos.setHorizontalGroup(
-			gl_panelJuegos.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelJuegos.createSequentialGroup()
-					.addGap(7)
-					.addComponent(lblJuego)
-					.addGap(36)
-					.addComponent(lblJuego2)
-					.addGap(32)
-					.addComponent(lblJuego3)
-					.addGap(32)
-					.addComponent(lblJuego4))
-		);
-		gl_panelJuegos.setVerticalGroup(
-			gl_panelJuegos.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelJuegos.createSequentialGroup()
-					.addGap(20)
-					.addGroup(gl_panelJuegos.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblJuego)
-						.addComponent(lblJuego2)
-						.addComponent(lblJuego3)
-						.addComponent(lblJuego4)))
-		);
-		panelJuegos.setLayout(gl_panelJuegos);
-		
-		
-		JButton btnBuscarJuego = new JButton("Buscar Juego");
-		btnBuscarJuego.addActionListener(new ActionListener() {
-			@SuppressWarnings("unlikely-arg-type")
-			public void actionPerformed(ActionEvent arg0) {
-				if(textField.getText().equals(null)) {
-					for(int i=0;i<juegos.size();i++) {
-						
-					}
-				}
-				if(textField.getText().equals(juegos)) {
 
-					System.out.println(lblJuego.getText());
-					lblJuego2.setVisible(false);
-					
-				}
+		JLabel lblJuego4 = new JLabel("");
+		lblJuego4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				new V_JuegoInfo(juegos.get(3), u, V_Tienda.this).setVisible(true);
+
 			}
 		});
-		panel_2.add(btnBuscarJuego);
-		
+		ImageIcon imageIcon4 = new ImageIcon("./img/4.jpg");
+		Image image4 = imageIcon4.getImage();
+		Image newimg4 = image4.getScaledInstance(100, 120, java.awt.Image.SCALE_SMOOTH);
+		imageIcon4 = new ImageIcon(newimg4);
+		lblJuego4.setIcon(imageIcon4);
+
+		JLabel lblJuego5 = new JLabel("");
+		lblJuego5.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				new V_JuegoInfo(juegos.get(4), u, V_Tienda.this).setVisible(true);
+
+			}
+		});
+		ImageIcon imageIcon5 = new ImageIcon("./img/5.jpg");
+		Image image5 = imageIcon5.getImage();
+		Image newimg5 = image5.getScaledInstance(100, 120, java.awt.Image.SCALE_SMOOTH);
+		imageIcon5 = new ImageIcon(newimg5);
+		lblJuego5.setIcon(imageIcon5);
+
+		JLabel lblJuego6 = new JLabel("");
+		lblJuego6.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				new V_JuegoInfo(juegos.get(5), u, V_Tienda.this).setVisible(true);
+
+			}
+		});
+		ImageIcon imageIcon6 = new ImageIcon("./img/6.jpg");
+		Image image6 = imageIcon6.getImage();
+		Image newimg6 = image6.getScaledInstance(100, 120, java.awt.Image.SCALE_SMOOTH);
+		imageIcon6 = new ImageIcon(newimg6);
+		lblJuego6.setIcon(imageIcon6);
+
+		juegos.add(new Juego("Assasins Creed Origins", 16, "Aventura", 50.00, false, lblJuego));
+		juegos.add(new Juego("Fifa 20", 12, "Deportes", 60.00, false, lblJuego2));
+		juegos.add(new Juego("Total War Shogun 2", 16, "Estrategia", 30.00, false, lblJuego3));
+		juegos.add(new Juego("Battlefield 1", 18, "Acción", 70.00, false, lblJuego4));
+		juegos.add(new Juego("Resident Evil", 18, "Acción", 30.00, false, lblJuego5));
+		juegos.add(new Juego("Devil May Cry", 18, "Aventura", 40.00, false, lblJuego6));
+
+		JPanel panelSaldo = new JPanel();
+
+		JLabel lblSaldoDisponible = new JLabel("Saldo disponible: ");
+
+		fondos.setText(Double.toString(u.getSaldo()));
+
+		JButton btnAadirFondos = new JButton("A\u00F1adir Fondos");
+		GroupLayout gl_panelSaldo = new GroupLayout(panelSaldo);
+		gl_panelSaldo.setHorizontalGroup(gl_panelSaldo.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelSaldo.createSequentialGroup().addGap(42).addComponent(lblSaldoDisponible)
+						.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(fondos).addGap(12)
+						.addComponent(btnAadirFondos).addGap(27)));
+		gl_panelSaldo.setVerticalGroup(gl_panelSaldo.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelSaldo.createSequentialGroup().addGap(9)
+						.addGroup(gl_panelSaldo.createParallelGroup(Alignment.BASELINE).addComponent(lblSaldoDisponible)
+								.addComponent(btnAadirFondos).addComponent(fondos))
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		panelSaldo.setLayout(gl_panelSaldo);
+		btnAadirFondos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (u.getSaldo() < 500) {
+					u.setSaldo(u.getSaldo() + 10);
+					fondos.setText(Double.toString(u.getSaldo()));
+				} else {
+					JFrame f;
+					f = new JFrame();
+					JOptionPane.showMessageDialog(f, "No puedes añadir mas de 500 euros");
+				}
+
+			}
+		});
+
+		JPanel panelJuegos = new JPanel();
+		panelJuegos.setLayout(new GridLayout(0, 4));
+
+		panelJuegos.setAutoscrolls(false);
+		panelJuegos.setAutoscrolls(true);
+
+		for (int i = 0; i < juegos.size(); i++) {
+			panelJuegos.add(juegos.get(i).getCaratula());
+		}
+
 		JPanel panelBuscar = new JPanel();
-		panel_3.add(panelBuscar, "cell 3 1,grow");
-		
-		JComboBox<String> comboBox = new JComboBox<String>(categorias);
-		
+
+		JButton btnBuscarJuego = new JButton("Buscar Juego");
+		btnBuscarJuego.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				List<String> gamesList = new ArrayList<String>();
+				for (int i = 0; i < juegos.size(); i++) {
+					gamesList.add(juegos.get(i).getNombre().toUpperCase());
+					juegos.get(i).getCaratula().setVisible(false);
+				}
+				String searching = comp.getText();
+				for (int i = 0; i < gamesList.size(); i++) {
+					if (gamesList.get(i).contains(searching.toUpperCase())) {
+						juegos.get(i).getCaratula().setVisible(true);
+
+					}
+
+				}
+
+			}
+		});
+		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
+		gl_panel_2.setHorizontalGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_2.createSequentialGroup().addGap(5)
+						.addComponent(comp, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE).addGap(10)
+						.addComponent(btnBuscarJuego).addContainerGap()));
+		gl_panel_2.setVerticalGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_2.createSequentialGroup().addGap(6)
+						.addGroup(gl_panel_2
+								.createParallelGroup(Alignment.BASELINE).addComponent(comp, GroupLayout.PREFERRED_SIZE,
+										GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnBuscarJuego))));
+		panel_2.setLayout(gl_panel_2);
+
+		JComboBox comboBox = new JComboBox(categorias);
+
 		JButton btnNewButton = new JButton("Buscar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				for(int i =0; i<juegos.size();i++) {
+				for (int i = 0; i < juegos.size(); i++) {
 					juegos.get(i).getCaratula().setVisible(true);
+
+				}
+				if (!comboBox.getSelectedItem().equals("Todos")) {
+					for (int i = 0; i < juegos.size(); i++) {
+
+						if (!juegos.get(i).getCategoria().equals(comboBox.getSelectedItem().toString())) {
+							juegos.get(i).getCaratula().setVisible(false);
+
+						}
+
 					}
-				if(!comboBox.getSelectedItem().equals("Todos")) {
-				for(int i =0; i<juegos.size();i++) {
-					
-					if(!juegos.get(i).getCategoria().equals(comboBox.getSelectedItem().toString())) {
-				juegos.get(i).getCaratula().setVisible(false);
-					
-					}
-					
-					
-					}
+				}
 			}
-			}});
-		
+		});
+
 		JLabel lblBuscarPorCategoria = new JLabel("Categoria");
 		lblBuscarPorCategoria.setVerticalAlignment(SwingConstants.TOP);
-		
+
 		JButton btnAtras = new JButton("Atras");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			new V_principal(u).setVisible(true);
-			V_Tienda.this.dispose();	
+				new V_principal(u).setVisible(true);
+				V_Tienda.this.dispose();
 			}
 		});
 		GroupLayout gl_panelBuscar = new GroupLayout(panelBuscar);
@@ -250,9 +282,9 @@ public class V_Tienda extends JFrame {
 				.addGroup(gl_panelBuscar.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panelBuscar.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblBuscarPorCategoria, GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+						.addComponent(lblBuscarPorCategoria, GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
 						.addComponent(btnNewButton)
-						.addComponent(comboBox, 0, 120, Short.MAX_VALUE)
+						.addComponent(comboBox, 0, 69, Short.MAX_VALUE)
 						.addComponent(btnAtras, Alignment.TRAILING))
 					.addContainerGap())
 		);
@@ -265,12 +297,46 @@ public class V_Tienda extends JFrame {
 					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(37)
 					.addComponent(btnNewButton)
-					.addGap(157)
+					.addGap(115)
 					.addComponent(btnAtras)
-					.addGap(36))
+					.addGap(24))
 		);
 		panelBuscar.setLayout(gl_panelBuscar);
-		
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addComponent(panel_3,
+				GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE));
+		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+						.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
+		gl_panel_3.setHorizontalGroup(gl_panel_3.createParallelGroup(Alignment.LEADING).addGroup(gl_panel_3
+				.createSequentialGroup().addGap(7)
+				.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING).addGroup(gl_panel_3.createSequentialGroup()
+						.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 283, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(panelSaldo,
+								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_3.createSequentialGroup()
+								.addComponent(panelJuegos, GroupLayout.PREFERRED_SIZE, 505, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(panelBuscar, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)))
+				.addContainerGap(7, Short.MAX_VALUE)));
+		gl_panel_3
+				.setVerticalGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_3.createSequentialGroup().addGap(7)
+								.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
+										.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addComponent(panelSaldo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE))
+								.addGap(18)
+								.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING, false)
+										.addComponent(panelBuscar, 0, 0, Short.MAX_VALUE)
+										.addComponent(panelJuegos, GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE))
+								.addGap(54)));
+		panel_3.setLayout(gl_panel_3);
+		contentPane.setLayout(gl_contentPane);
 
 	}
+
 }
