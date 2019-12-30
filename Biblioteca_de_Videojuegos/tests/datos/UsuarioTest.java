@@ -45,6 +45,6 @@ public class UsuarioTest {
 	
 	@Test
 	public void testGetSaldo() {
-		assertEquals(12.12,u.getSaldo());
+		assertEquals(12.12,u.getSaldo(),0.001);
 	}
 }

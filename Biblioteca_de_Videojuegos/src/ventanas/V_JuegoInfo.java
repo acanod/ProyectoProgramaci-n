@@ -1,7 +1,6 @@
-package pruebasProyectop3;
+package ventanas;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,31 +17,14 @@ import java.awt.event.ActionEvent;
 
 public class V_JuegoInfo extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					V_JuegoInfo frame = new V_JuegoInfo(null, null, null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public V_JuegoInfo(Juego j, Usuario u, V_Tienda t) {
 		setTitle(j.getNombre());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setSize(450, 300);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -50,7 +32,6 @@ public class V_JuegoInfo extends JFrame {
 
 		JLabel precio = new JLabel(j.getNombre());
 		contentPane.add(precio, BorderLayout.CENTER);
-		
 		
 		JButton jugar = new JButton("Jugar");
 		jugar.setEnabled(false);
@@ -61,12 +42,13 @@ public class V_JuegoInfo extends JFrame {
 		contentPane.add(comprar, BorderLayout.SOUTH);
 		
 		for (int i = 0; i < u.getJuegosComprados().size(); i++) {
-		if ((u.getJuegosComprados().get(i).getNombre()== (j.getNombre()))) {
-			comprar.setVisible(false);
-			jugar.setEnabled(true);
-			contentPane.add(jugar, BorderLayout.SOUTH);
-		} 
+			if ((u.getJuegosComprados().get(i).getNombre() == (j.getNombre()))) {
+				comprar.setVisible(false);
+				jugar.setEnabled(true);
+				contentPane.add(jugar, BorderLayout.SOUTH);
+			} 
 		}
+		
 		comprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				for (int i = 0; i < u.getNumeroDeJuegos(); i++) {
@@ -100,10 +82,8 @@ public class V_JuegoInfo extends JFrame {
 			}
 		});
 		
-
 		JLabel nombre = new JLabel(Double.toString(j.getPrecio()));
 		contentPane.add(nombre, BorderLayout.EAST);
-		
 		
 	}
 

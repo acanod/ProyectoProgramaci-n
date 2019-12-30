@@ -8,7 +8,7 @@ import datos.Usuario;
 public class V_Amigos extends JFrame{
 
 	private static final long serialVersionUID = 1L;
-
+	
 	public V_Amigos(Usuario u) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(Toolkit.getDefaultToolkit().getScreenSize().width/2, Toolkit.getDefaultToolkit().getScreenSize().height/3);
@@ -33,7 +33,7 @@ public class V_Amigos extends JFrame{
 		panelArbol.setBorder(BorderFactory.createTitledBorder("Lista de amigos"));
 
 		JScrollPane panelLista = new JScrollPane(new JList<Usuario>());
-		panelLista.setBorder(BorderFactory.createTitledBorder("Detalles"));
+		panelLista.setBorder(BorderFactory.createTitledBorder("Usuarios"));
 
 		JButton btnAinadir = new JButton("Añadir");
 		JButton btnAtras = new JButton("Atras");
@@ -42,7 +42,7 @@ public class V_Amigos extends JFrame{
 		c.weightx = 1.0; c.weighty = 0.0;
 		c.gridx = 0; c.gridy = 0;
 		c.gridwidth = GridBagConstraints.REMAINDER; c.gridheight = 1;
-		container.add(new JToolBar(), c);
+		
 
 		c.fill = GridBagConstraints. NONE;
 		c.insets = new Insets(2,2,6,2);
@@ -50,23 +50,12 @@ public class V_Amigos extends JFrame{
 		c.gridx=0; c.gridy = 1;
 		c.gridwidth= 1; c.gridheight = 1;
 		c.anchor=GridBagConstraints.EAST;
-		container.add(new JLabel("Servidor"),c);
+		container.add(new JLabel("Buscar nombre de amigo:"), c);
 
 		c.gridx = 1;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor= GridBagConstraints. WEST;
 		container.add(new JTextField(), c);
-
-		c.gridx = 4;
-		c.fill = GridBagConstraints.NONE;
-		c.gridwidth = GridBagConstraints.RELATIVE;
-		c.anchor = GridBagConstraints.EAST;
-		container.add(new JLabel("Estado:"), c);
-
-		c.gridx = 5;
-		c.gridwidth = GridBagConstraints. REMAINDER;
-		c.anchor = GridBagConstraints.WEST;
-		container.add(new JLabel("Desconectado"), c);
 
 		c.gridx = 0; c.gridy = 2;
 		c.weighty= 1.0;
@@ -75,17 +64,15 @@ public class V_Amigos extends JFrame{
 		container.add(panelArbol, c);
 
 		c.gridx = 2;
-		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.gridwidth = GridBagConstraints.RELATIVE;
 		container.add(panelLista, c);
 
-		c.weighty = 0.0;
 		c.gridx = 0; c.gridy = 3;
-		c.gridheight = GridBagConstraints.RELATIVE;
+		c.gridwidth = GridBagConstraints.BOTH;;
+		c.gridheight = GridBagConstraints.BOTH;
 		container.add(btnAinadir, c);
 		
-		c.weighty = 0.0;
-		c.gridx = 2; c.gridy = 3;
-		c.gridheight = GridBagConstraints.REMAINDER;
+		c.gridx = 2; 
 		container.add(btnAtras, c);
 	}
 	

@@ -1,4 +1,4 @@
-package pruebasProyectop3;
+package ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -33,13 +33,11 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class V_Tienda extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField comp;
 	public JLabel fondos = new JLabel("");
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -52,10 +50,6 @@ public class V_Tienda extends JFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
 
 	public V_Tienda(Usuario u) {
 		setTitle("Tienda");

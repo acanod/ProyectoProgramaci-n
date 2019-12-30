@@ -24,7 +24,7 @@ public class V_principal extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @param u 
+	 * @param usuario
 	 */
 	public V_principal(Usuario u) {
 		setTitle("Pagina principal");
@@ -60,6 +60,13 @@ public class V_principal extends JFrame {
 		contentPane.add(btnTienda);
 		
 		JButton btnBiblioteca = new JButton("Biblioteca");
+		btnBiblioteca.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		contentPane.add(btnBiblioteca);
 		
 		JButton btnAmigos = new JButton("Amigos");
