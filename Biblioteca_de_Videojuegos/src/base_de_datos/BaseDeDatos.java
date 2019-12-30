@@ -40,6 +40,8 @@ public class BaseDeDatos {
 			statement.executeUpdate("CREATE TABLE IF NOT EXISTS juego (nombre CHAR(20) NOT NULL PRIMARY KEY, edad_necesaria INT, categoria CHAR(20) NOT NULL, precio INT,"
 					+ " prestamo BOOLEAN)");
 			
+			statement.executeUpdate("CREATE TABLE IF NOT EXISTS amigos (nombre VARCHAR(35), amigo VARCHAR(35), FOREIGN KEY (nombre, amigo) REFERENCES usuario (nombre, nombre))");
+			
 			log(Level.INFO, "Base de datos conectada", null);
 			return true;
 		} catch(SQLException e) {
