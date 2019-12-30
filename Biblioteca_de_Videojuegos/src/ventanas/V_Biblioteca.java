@@ -1,7 +1,5 @@
 package ventanas;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -16,35 +14,17 @@ import java.awt.GridLayout;
 
 public class V_Biblioteca extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					V_Biblioteca frame = new V_Biblioteca(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public V_Biblioteca(Usuario u) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 612, 412);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
-		
+
+
 		JButton btnNewButton = new JButton("Atras");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -52,36 +32,36 @@ public class V_Biblioteca extends JFrame {
 				V_Biblioteca.this.setVisible(false);
 			}
 		});
-		
+
 		JPanel panelJuegos = new JPanel();
 		panelJuegos.setLayout(new GridLayout(1, 0, 0, 0));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnNewButton)
-						.addComponent(panelJuegos, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE))
-					.addContainerGap())
-		);
+						.addContainerGap()
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnNewButton)
+								.addComponent(panelJuegos, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE))
+						.addContainerGap())
+				);
 		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addComponent(panelJuegos, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-					.addGap(18)
-					.addComponent(btnNewButton))
-		);
+						.addComponent(panelJuegos, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+						.addGap(18)
+						.addComponent(btnNewButton))
+				);
 		contentPane.setLayout(gl_contentPane);
-		
-		
+
+
 		for(int i=0; i<u.getJuegosComprados().size();i++) {
 			panelJuegos.add(u.getJuegosComprados().get(i).getCaratula());
-			
+
 		}
-	
-			}
-		}
+
+	}
+}
 
 
 

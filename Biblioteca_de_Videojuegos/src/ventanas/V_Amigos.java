@@ -1,6 +1,9 @@
 package ventanas;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 import datos.Usuario;
@@ -74,6 +77,15 @@ public class V_Amigos extends JFrame{
 		
 		c.gridx = 2; 
 		container.add(btnAtras, c);
+		
+		btnAtras.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 	
 }
