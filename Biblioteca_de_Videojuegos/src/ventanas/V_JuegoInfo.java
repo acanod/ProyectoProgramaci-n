@@ -48,23 +48,15 @@ public class V_JuegoInfo extends JFrame {
 				comprar.setVisible(false);
 				jugar.setEnabled(true);
 				contentPane.add(jugar, BorderLayout.SOUTH);
-			} 	
+			} 
 			}
 			}
 			
 			
-		
-		comprar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				for (int i = 0; i <= u.getNumeroDeJuegos(); i++) {
-					if ((u.getJuegosComprados().size()!=0 && u.getJuegosComprados().get(i).getNombre()== (j.getNombre()))) {
-						JFrame f;
-						f = new JFrame();
-						JOptionPane.showMessageDialog(f, "Ya tienes este juego.");
-						
-						break;	
-					} else {
-						if (u.getSaldo() < j.getPrecio()) {
+			comprar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					for (int i = 0; i <= u.getNumeroDeJuegos(); i++) {
+						if ((u.getJuegosComprados().size()!=0 && u.getJuegosComprados().get(i).getNombre()== (j.getNombre()))) {
 							JFrame f;
 							f = new JFrame();
 							JOptionPane.showMessageDialog(f, "Ya tienes este juego.");
