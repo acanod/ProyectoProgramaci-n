@@ -41,8 +41,8 @@ public class V_JuegoInfo extends JFrame {
 		comprar.setEnabled(true);
 		contentPane.add(comprar, BorderLayout.SOUTH);
 		
-		if(!(u.getJuegosComprados().size()==0)) {
-			for (int i = 0; i < u.getJuegosComprados().size(); i++) {
+		if(!(u.getNumeroDeJuegos()==0)) {
+			for (int i = 0; i < u.getNumeroDeJuegos(); i++) {
 			if ((u.getJuegosComprados().get(i).getNombre()== (j.getNombre()))) {
 				comprar.setVisible(false);
 				jugar.setEnabled(true);
@@ -50,39 +50,40 @@ public class V_JuegoInfo extends JFrame {
 			} 
 			}
 			}
-		
-		comprar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				for (int i = 0; i < u.getNumeroDeJuegos(); i++) {
-					if ((u.getJuegosComprados().size()!=0 && u.getJuegosComprados().get(i).getNombre()== (j.getNombre()))) {
-						JFrame f;
-						f = new JFrame();
-						JOptionPane.showMessageDialog(f, "Ya tienes este juego.");
-						
-						break;	
-					} else {
-						if (u.getSaldo() < j.getPrecio()) {
+			
+			
+			comprar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					for (int i = 0; i <= u.getNumeroDeJuegos(); i++) {
+						if ((u.getJuegosComprados().size()!=0 && u.getJuegosComprados().get(i).getNombre()== (j.getNombre()))) {
 							JFrame f;
 							f = new JFrame();
-							JOptionPane.showMessageDialog(f, "No tienes suficiente dinero para comprar este juego");
-							break;
+							JOptionPane.showMessageDialog(f, "Ya tienes este juego.");
+							
+							break;	
 						} else {
-							u.setSaldo(u.getSaldo() - j.getPrecio());
-							u.setJuegosComprados(i, j);
-							int ndjc= u.getNumeroDeJuegos();
-							u.setNumeroDeJuegos(ndjc++);
-							t.fondos.setText(Double.toString(u.getSaldo()));
-							JFrame f;
-							f = new JFrame();
-							JOptionPane.showMessageDialog(f, "Has comprado " + j.getNombre());
-							break;
+							if (u.getSaldo() < j.getPrecio()) {
+								JFrame f;
+								f = new JFrame();
+								JOptionPane.showMessageDialog(f, "No tienes suficiente dinero para comprar este juego");
+								break;
+							} else {
+								u.setSaldo(u.getSaldo() - j.getPrecio());
+								u.setJuegosComprados(i, j);
+								int ndjc= u.getNumeroDeJuegos()+1;
+								u.setNumeroDeJuegos(ndjc);
+								t.fondos.setText(Double.toString(u.getSaldo()));
+								JFrame f;
+								f = new JFrame();
+								JOptionPane.showMessageDialog(f, "Has comprado " + j.getNombre());
+								break;
+
+							}
 
 						}
-
 					}
 				}
-			}
-		});
+			});
 		
 		JLabel nombre = new JLabel(Double.toString(j.getPrecio()));
 		contentPane.add(nombre, BorderLayout.EAST);
