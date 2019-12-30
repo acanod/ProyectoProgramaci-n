@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import base_de_datos.BaseDeDatos;
+import datos.Juego;
 import datos.Usuario;
 
 public class V_registro extends JFrame{
@@ -176,10 +177,11 @@ public class V_registro extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				ArrayList<Juego> compra = new ArrayList<Juego>();
 				char[] contra = password.getPassword();
 				String contr = new String(contra);
 				Usuario registrar = new Usuario(nombre.getText(), apellido.getText(),contr, email.getText(),
-						pais.getSelectedItem().toString(), 0, 50, null);
+						pais.getSelectedItem().toString(), 0, 50, compra);
 				if(BaseDeDatos.insertarUsuario(registrar)) {
 					V_registro.this.setVisible(false);
 					new V_principal(registrar);

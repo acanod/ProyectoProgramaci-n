@@ -41,6 +41,7 @@ public class V_JuegoInfo extends JFrame {
 		comprar.setEnabled(true);
 		contentPane.add(comprar, BorderLayout.SOUTH);
 		
+<<<<<<< HEAD
 		if(!(u.getNumeroDeJuegos()==0)) {
 			for (int i = 0; i < u.getNumeroDeJuegos(); i++) {
 			if ((u.getJuegosComprados().get(i).getNombre()== (j.getNombre()))) {
@@ -48,7 +49,17 @@ public class V_JuegoInfo extends JFrame {
 				jugar.setEnabled(true);
 				contentPane.add(jugar, BorderLayout.SOUTH);
 			} 
+=======
+		if (!(u.getJuegosComprados().size() == 0)) {
+			for (int i = 0; i < u.getJuegosComprados().size(); i++) {
+				if ((u.getJuegosComprados().get(i).getNombre() == (j.getNombre()))) {
+					comprar.setVisible(false);
+					jugar.setEnabled(true);
+					contentPane.add(jugar, BorderLayout.SOUTH);
+				}
+>>>>>>> branch 'master' of https://github.com/acanod/ProyectoProgramaci-n.git
 			}
+<<<<<<< HEAD
 			}
 			
 			
@@ -56,6 +67,21 @@ public class V_JuegoInfo extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					for (int i = 0; i <= u.getNumeroDeJuegos(); i++) {
 						if ((u.getJuegosComprados().size()!=0 && u.getJuegosComprados().get(i).getNombre()== (j.getNombre()))) {
+=======
+		}
+		
+		comprar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (int i = 0; i < u.getNumeroDeJuegos(); i++) {
+					if ((u.getJuegosComprados().size()!=0 && u.getJuegosComprados().get(i).getNombre()== (j.getNombre()))) {
+						JFrame f;
+						f = new JFrame();
+						JOptionPane.showMessageDialog(f, "Ya tienes este juego.");
+						
+						break;	
+					} else {
+						if (u.getSaldo() < j.getPrecio()) {
+>>>>>>> branch 'master' of https://github.com/acanod/ProyectoProgramaci-n.git
 							JFrame f;
 							f = new JFrame();
 							JOptionPane.showMessageDialog(f, "Ya tienes este juego.");

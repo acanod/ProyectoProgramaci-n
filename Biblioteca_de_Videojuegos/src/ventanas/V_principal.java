@@ -64,7 +64,8 @@ public class V_principal extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				new V_Biblioteca(u).setVisible(true);
+				V_principal.this.setVisible(false);
 			}
 		});
 		contentPane.add(btnBiblioteca);
