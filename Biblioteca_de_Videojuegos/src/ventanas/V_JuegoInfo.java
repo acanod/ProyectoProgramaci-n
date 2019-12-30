@@ -48,7 +48,7 @@ public class V_JuegoInfo extends JFrame {
 				comprar.setVisible(false);
 				jugar.setEnabled(true);
 				contentPane.add(jugar, BorderLayout.SOUTH);
-			} 
+			} 	
 			}
 			}
 			
