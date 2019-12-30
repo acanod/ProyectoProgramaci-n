@@ -41,13 +41,15 @@ public class V_JuegoInfo extends JFrame {
 		comprar.setEnabled(true);
 		contentPane.add(comprar, BorderLayout.SOUTH);
 		
-		for (int i = 0; i < u.getJuegosComprados().size(); i++) {
-			if ((u.getJuegosComprados().get(i).getNombre() == (j.getNombre()))) {
+		if(!(u.getJuegosComprados().size()==0)) {
+			for (int i = 0; i < u.getJuegosComprados().size(); i++) {
+			if ((u.getJuegosComprados().get(i).getNombre()== (j.getNombre()))) {
 				comprar.setVisible(false);
 				jugar.setEnabled(true);
 				contentPane.add(jugar, BorderLayout.SOUTH);
 			} 
-		}
+			}
+			}
 		
 		comprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
