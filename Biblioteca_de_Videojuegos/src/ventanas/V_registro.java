@@ -4,11 +4,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.*;
 
 import base_de_datos.BaseDeDatos;
-import datos.Juego;
 import datos.Usuario;
 
 public class V_registro extends JFrame{
@@ -20,12 +18,13 @@ public class V_registro extends JFrame{
 	private JTextField apellido;
 	private JTextField email;
 	private JComboBox<String> pais;
+	private JTextField fecha;
 	
 	public V_registro() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(Toolkit.getDefaultToolkit().getScreenSize().width/3, Toolkit.getDefaultToolkit().getScreenSize().height/2);
 		setLocationRelativeTo(null);
-		setTitle("Inicio");
+		setTitle("Registro");
 		setResizable(false);
 		componentes();
 		setVisible(true);
@@ -38,7 +37,7 @@ public class V_registro extends JFrame{
 
 		JButton registrar = new JButton ("Registrar");
 		constraints.gridx = 0;
-		constraints.gridy = 4;
+		constraints.gridy = 6;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		constraints.anchor = GridBagConstraints.PAGE_END;
@@ -49,10 +48,10 @@ public class V_registro extends JFrame{
 
 		JButton atras = new JButton ("Atras");
 		constraints.gridx = 2;
-		constraints.gridy = 4;
+		constraints.gridy = 6;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
-		constraints.anchor = GridBagConstraints.LAST_LINE_END;
+		constraints.anchor = GridBagConstraints.PAGE_END;
 		constraints.weighty = 0.05;
 		this.getContentPane().add (atras, constraints);
 		constraints.anchor = GridBagConstraints.CENTER;
@@ -102,9 +101,31 @@ public class V_registro extends JFrame{
 		constraints.weightx = 0.0;
 		constraints.weighty = 0.0;
 		
-		JLabel lemail = new JLabel("Email");
+		JLabel lpassword = new JLabel("Contraseña");
 		constraints.gridx = 0;
 		constraints.gridy = 2;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.weighty = 0.05;
+		getContentPane().add(lpassword, constraints);
+		constraints.weighty = 0.0;
+		
+		JPasswordField password = new JPasswordField();
+		constraints.gridx = 2;
+		constraints.gridy = 2;
+		constraints.gridwidth = 3;
+		constraints.gridheight = 1;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.weightx = 1.0;
+		constraints.weighty = 0.05;
+		getContentPane().add(password, constraints);
+		constraints.weightx = 0.0;
+		constraints.weighty = 0.0;
+		constraints.fill = GridBagConstraints.CENTER;
+		
+		JLabel lemail = new JLabel("Email");
+		constraints.gridx = 0;
+		constraints.gridy = 3;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		constraints.weighty = 0.05;
@@ -113,7 +134,7 @@ public class V_registro extends JFrame{
 		
 		email = new JTextField();
 		constraints.gridx = 2;
-		constraints.gridy = 2;
+		constraints.gridy = 3;
 		constraints.gridwidth = 3;
 		constraints.gridheight = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -126,7 +147,7 @@ public class V_registro extends JFrame{
 		
 		JLabel lpais = new JLabel("Pais");
 		constraints.gridx = 0;
-		constraints.gridy = 3;
+		constraints.gridy = 4;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		constraints.weighty = 0.05;
@@ -141,7 +162,7 @@ public class V_registro extends JFrame{
 			pais.addItem(paises.get(i));
 		}
 		constraints.gridx = 2;
-		constraints.gridy = 3;
+		constraints.gridy = 4;
 		constraints.gridwidth = 2;
 		constraints.gridheight = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -150,24 +171,24 @@ public class V_registro extends JFrame{
 		constraints.weighty = 0.0;
 		constraints.fill = GridBagConstraints.NONE;
 		
-		JLabel lpassword = new JLabel("Contraseña");
+		JLabel lfecha = new JLabel("Fecha de nacimiento");
 		constraints.gridx = 0;
-		constraints.gridy = 4;
+		constraints.gridy = 5;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
+		constraints.weightx = 1.0;
 		constraints.weighty = 0.05;
-		getContentPane().add(lpassword, constraints);
-		constraints.weighty = 0.0;
+		getContentPane().add(lfecha, constraints);
 		
-		JPasswordField password = new JPasswordField();
+		fecha = new JTextField("YYYY-MM-DD");
 		constraints.gridx = 2;
-		constraints.gridy = 4;
+		constraints.gridy = 5;
 		constraints.gridwidth = 3;
 		constraints.gridheight = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		constraints.weightx = 1.0;
 		constraints.weighty = 0.05;
-		getContentPane().add(password, constraints);
+		getContentPane().add(fecha, constraints);
 		constraints.weightx = 0.0;
 		constraints.weighty = 0.0;
 		constraints.fill = GridBagConstraints.CENTER;
@@ -177,14 +198,15 @@ public class V_registro extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				ArrayList<Juego> compra = new ArrayList<Juego>();
 				char[] contra = password.getPassword();
 				String contr = new String(contra);
-				Usuario registrar = new Usuario(nombre.getText(), apellido.getText(),contr, email.getText(),
-						pais.getSelectedItem().toString(), 0, 50, compra);
+				
+				Usuario registrar = new Usuario(nombre.getText(), apellido.getText(), contr, fecha.getText(), email.getText(),
+						pais.getSelectedItem().toString(), 0, 50);
+				
 				if(BaseDeDatos.insertarUsuario(registrar)) {
 					V_registro.this.setVisible(false);
-					new V_principal(registrar);
+					new V_principal(registrar).setVisible(true);;
 				} else {
 					JOptionPane.showMessageDialog(null,"Error a la hora de añadir el usuario");
 				}

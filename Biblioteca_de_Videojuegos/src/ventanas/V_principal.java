@@ -27,7 +27,7 @@ public class V_principal extends JFrame {
 	 * @param usuario
 	 */
 	public V_principal(Usuario u) {
-		setTitle("Pagina principal");
+		setTitle("Pagina principal "+u.getNombre());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(Toolkit.getDefaultToolkit().getScreenSize().width/3, Toolkit.getDefaultToolkit().getScreenSize().height/2);
 		setLocationRelativeTo(null);
@@ -53,8 +53,8 @@ public class V_principal extends JFrame {
 		btnTienda = new JButton("Tienda");
 		btnTienda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new V_Tienda(u).setVisible(true);
-				V_principal.this.setVisible(false);
+				new V_Tienda(u);
+				V_principal.this.dispose();
 			}
 		});
 		contentPane.add(btnTienda);
@@ -64,13 +64,13 @@ public class V_principal extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				new V_Biblioteca(u).setVisible(true);
+				new V_Biblioteca(u);
 				V_principal.this.setVisible(false);
 			}
 		});
 		contentPane.add(btnBiblioteca);
 		
-		JButton btnAmigos = new JButton("Amigos");
+		JButton btnAmigos = new JButton("Amigos de "+u.getNombre());
 		contentPane.add(btnAmigos);
 		btnAmigos.addActionListener(new ActionListener() {
 			@Override
@@ -86,6 +86,8 @@ public class V_principal extends JFrame {
 		
 		JLabel label = new JLabel(Double.toString(u.getSaldo()));
 		contentPane.add(label);
+		
+		System.out.println(u.getSaldo()+" - "+u.getNumeroDeJuegos());
 	}
 
 }

@@ -83,7 +83,8 @@ public class V_Amigos extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				V_Amigos.this.dispose();
+				new V_principal(u).setVisible(true);;
 			}
 		});
 	}

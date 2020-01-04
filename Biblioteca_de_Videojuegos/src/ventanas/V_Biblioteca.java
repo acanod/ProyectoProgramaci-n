@@ -1,6 +1,7 @@
 package ventanas;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -19,17 +20,18 @@ public class V_Biblioteca extends JFrame {
 
 	public V_Biblioteca(Usuario u) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setVisible(true);
 		setBounds(100, 100, 612, 412);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-
 		JButton btnNewButton = new JButton("Atras");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new V_principal(u).setVisible(true);
-				V_Biblioteca.this.setVisible(false);
+				new V_principal(u);
+				V_Biblioteca.this.dispose();
 			}
 		});
 
@@ -54,14 +56,12 @@ public class V_Biblioteca extends JFrame {
 				);
 		contentPane.setLayout(gl_contentPane);
 
-
-		for(int i=0; i<u.getJuegosComprados().size();i++) {
-			panelJuegos.add(u.getJuegosComprados().get(i).getCaratula());
-
+		if(u.getJuegosComprados().size() != 0) {
+			for(int i=0; i<u.getJuegosComprados().size();i++) {
+				panelJuegos.add(u.getJuegosComprados().get(i).getCaratula());
+			}
+		} else {
+			JOptionPane.showMessageDialog(null,"No tienes juegos comprados");
 		}
-
 	}
 }
-
-
-

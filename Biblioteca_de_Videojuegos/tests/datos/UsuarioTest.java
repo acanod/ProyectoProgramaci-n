@@ -10,7 +10,7 @@ public class UsuarioTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		u= new Usuario("Nombre", "Apellido", "NM@gmail.com","Espanya", "nombreapellido33", 12, 12.63,null);
+		u= new Usuario("Nombre", "Apellido", "pass", "1997/12/30","nombre@gmail.com", "Espanya", 12, 12.63);
 	}
 
 	@Test

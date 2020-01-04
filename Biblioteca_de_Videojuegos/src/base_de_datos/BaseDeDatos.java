@@ -31,16 +31,18 @@ public class BaseDeDatos {
 	 */
 	public static boolean conectarBD() {
 		try {
-			connection = DriverManager.getConnection("jdbc:sqlite:videojuegos");
+			connection = DriverManager.getConnection("jdbc:sqlite:videojuegos.db");
 			Statement statement = connection.createStatement();
 
-			statement.executeUpdate("CREATE TABLE IF NOT EXISTS usuario (nombre VARCHAR(35) NOT NULL PRIMARY KEY, apellido CHAR(20) NOT NULL, password VARCHAR(30) NOT NULL, email CHAR(20) NOT NULL,"
-					+ " pais CHAR(35), numero_juegos INT, saldo REAL)");
+			statement.executeUpdate("CREATE TABLE IF NOT EXISTS usuario (nombre VARCHAR(35) NOT NULL PRIMARY KEY, apellido CHAR(20) NOT NULL, password VARCHAR(30) NOT NULL, fecha_naci DATE, email CHAR(20),"
+					+ " pais CHAR(35), numero_juegos INT, saldo DOUBLE)");
 			
-			statement.executeUpdate("CREATE TABLE IF NOT EXISTS juego (nombre CHAR(20) NOT NULL PRIMARY KEY, edad_necesaria INT, categoria CHAR(20) NOT NULL, precio INT,"
-					+ " prestamo BOOLEAN)");
+			statement.executeUpdate("CREATE TABLE IF NOT EXISTS juego (cod_jue INTEGER PRIMARY KEY AUTOINCREMENT, nombre CHAR(20) NOT NULL, edad_necesaria INT, categoria CHAR(20) NOT NULL, precio INT,"
+					+ " prestamo BOOLEAN, imagen BLOB)");
 			
 			statement.executeUpdate("CREATE TABLE IF NOT EXISTS amigos (nombre VARCHAR(35), amigo VARCHAR(35), FOREIGN KEY (nombre, amigo) REFERENCES usuario (nombre, nombre))");
+			
+			statement.executeUpdate("CREATE TABLE IF NOT EXISTS biblioteca (nombre VARCHAR(35), cod_jue CHAR(5), FOREIGN KEY (nombre) REFERENCES usuario (nombre), FOREIGN KEY (cod_jue) REFERENCES juego (cod_jue))");
 			
 			log(Level.INFO, "Base de datos conectada", null);
 			return true;
@@ -87,21 +89,22 @@ public class BaseDeDatos {
 	 */
 	public static boolean insertarUsuario(Usuario usuario) {
 		try {
-			String consulta = "INSERT INTO usuario (nombre, apellido, password, email, pais, numero_juegos, saldo)";
-			consulta = consulta+" VALUES (?, ?, ?, ?, ?, ?, ?);";
+			String consulta = "INSERT INTO usuario (nombre, apellido, password, fecha_naci, email, pais, numero_juegos, saldo)";
+			consulta = consulta+" VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 		    PreparedStatement ps = connection.prepareStatement(consulta);
 		    ps.setString(1, usuario.getNombre());
 		    ps.setString(2, usuario.getApellido());
 		    ps.setString(3, usuario.getPassword());
-		    ps.setString(4, usuario.getEmail());
-		    ps.setString(5, usuario.getPais());
-		    ps.setInt(6, usuario.getNumeroDeJuegos());
-		    ps.setDouble(7, usuario.getSaldo());
+		    ps.setString(4, usuario.getFecha_naci());
+		    ps.setString(5, usuario.getEmail());
+		    ps.setString(6, usuario.getPais());
+		    ps.setInt(7, usuario.getNumeroDeJuegos());
+		    ps.setDouble(8, usuario.getSaldo());
 			
 			ps.setQueryTimeout(30);
 			ps.executeUpdate();
 			ps.close();
-			log(Level.INFO, usuario + "añadido a la base de datos", null);
+			log(Level.INFO, usuario.getNombre() + " añadido a la base de datos", null);
 			return true;
 		}catch (SQLException e) {
 			log(Level.SEVERE, "Error a la hora de insertar al usuario " + usuario.getNombre(), e);
@@ -111,11 +114,11 @@ public class BaseDeDatos {
 	
 	/**
 	 * Para poder ver la información que hay en la tabla de usuario
-	 * @param Jugador
-	 * @return Nombre, apellido, email, pais, numero de juegos y saldo 
+	 * @param Usuario
+	 * @return Nombre, apellido, password, fecha_nacimiento, email, pais, numero de juegos, saldo y juegos comprados 
 	 * @throws SQLException
 	 */
-	public static String verUsuario(Usuario usuario) {
+	public static Usuario verUsuario(Usuario usuario) {
 		try {
 			statement = connection.createStatement();
 			rs = statement.executeQuery("SELECT "+usuario.getNombre()+" FROM usuario");
@@ -123,14 +126,17 @@ public class BaseDeDatos {
 				// Se saca por consola info de la tabla
 				System.out.println("Nombre = " + rs.getString("nombre"));
 				System.out.println("Apellido = " + rs.getString("apellido"));
+				System.out.println("Password = " + rs.getString("password"));
+				System.out.println("Fecha nacimiento = " + rs.getString("fecha_naci"));
 				System.out.println("Email = " + rs.getString("email"));
-				System.out.println("Pais = " + rs.getInt("pais"));
+				System.out.println("Pais = " + rs.getString("pais"));
 				System.out.println("Numero de juegos = " + rs.getInt("numero_juegos"));
-				System.out.println("Saldo = " + rs.getString("saldo"));
+				System.out.println("Saldo = " + rs.getDouble("saldo"));
 			}
 			rs.close();
 			log(Level.INFO, "Seleccionado el usuario " + usuario.getNombre(), null);
-			return rs.getString(1)+rs.getString(2)+rs.getString(3)+rs.getInt(4)+rs.getDate(5)+rs.getString(6);
+			return new Usuario(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
+					rs.getString(5), rs.getString(6), rs.getInt(7), rs.getDouble(8));
 		} catch (SQLException e) {
 			log(Level.SEVERE, "Error a la hora de seleccionar usuario", e);
 			return null;
@@ -150,12 +156,13 @@ public class BaseDeDatos {
 			rs = statement.executeQuery("SELECT * FROM juego WHERE nombre = '"+juego.getNombre()+"';");
 			Juego juegoCompleto = null;
 			while (rs.next()){
-				System.out.println("Nombre = "+rs.getString(1));
-				System.out.println("Edad necesaria = "+rs.getInt(2));
-				System.out.println("Categoria = "+rs.getString(3));
-				System.out.println("Precio = "+rs.getDouble(4));
-				System.out.println("Prestamo = "+rs.getBoolean(5));
-				juegoCompleto = new Juego(rs.getString(1), rs.getInt(2), rs.getString(3), rs.getDouble(4), rs.getBoolean(5));
+				System.out.println("Codigo = "+rs.getInt(1));
+				System.out.println("Nombre = "+rs.getString(2));
+				System.out.println("Edad necesaria = "+rs.getInt(3));
+				System.out.println("Categoria = "+rs.getString(4));
+				System.out.println("Precio = "+rs.getDouble(5));
+				System.out.println("Prestamo = "+rs.getBoolean(6));
+				juegoCompleto = new Juego(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getDouble(5), rs.getBoolean(6));
 			}
 			rs.close();
 			log(Level.INFO, "Seleccionado el entrenador " + juego.getNombre(), null);
@@ -204,7 +211,7 @@ public class BaseDeDatos {
 		    ps.setBoolean(5, juego.isPrestamo()); 
 
 			ps.executeUpdate();
-			log(Level.INFO, juego + "añadido a la base de datos", null);
+			log(Level.INFO, juego + " añadido a la base de datos", null);
 			return true;
 		} catch (SQLException e) {
 			log(Level.SEVERE, "Error a la hora de insertar el juego " + juego.getNombre(), e);

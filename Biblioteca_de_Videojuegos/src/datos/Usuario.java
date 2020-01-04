@@ -6,9 +6,10 @@ public class Usuario {
 
 	private String nombre;
 	private String apellido;
+	private String password;
+	private String fecha_naci;
 	private String email;
 	private String pais;
-	private String password;
 	private int numeroDeJuegos;
 	private double saldo;
 	private List<Juego> juegosComprados;
@@ -18,18 +19,32 @@ public class Usuario {
 		this.password = password;
 	}
 	
-	public Usuario(String nombre, String apellido, String email, String pais, String password, int numeroDeJuegos, double saldo, List<Juego> juegosComprados) {
+	public Usuario(String nombre, String apellido, String password, String fecha_naci, 
+			String email, String pais, int numeroDeJuegos, double saldo) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
+		this.password = password;
+		this.fecha_naci = fecha_naci;
 		this.email = email;
 		this.pais = pais;
+		this.numeroDeJuegos = numeroDeJuegos;
+		this.saldo = saldo;
+	}   
+	
+	public Usuario(String nombre, String apellido, String password, String fecha_naci, 
+			String email, String pais, int numeroDeJuegos, double saldo, List<Juego> juegosComprados) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
 		this.password = password;
+		this.fecha_naci = fecha_naci;
+		this.email = email;
+		this.pais = pais;
 		this.numeroDeJuegos = numeroDeJuegos;
 		this.saldo = saldo;
 		this.juegosComprados= juegosComprados;
 	}   
-
 
 	public int getNumeroDeJuegos() {
 		return numeroDeJuegos;
@@ -93,5 +108,17 @@ public class Usuario {
 	
 	public void setJuegosComprados(int index, Juego juegosComprados) {
 		this.juegosComprados.add(index, juegosComprados);
+	}
+	
+	public void addJuegosComprados(Juego juegosComprados) {
+		this.juegosComprados.add(juegosComprados);
+	}
+
+	public String getFecha_naci() {
+		return fecha_naci;
+	}
+
+	public void setFecha_naci(String fecha_naci) {
+		this.fecha_naci = fecha_naci;
 	}
 }

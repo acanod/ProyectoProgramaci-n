@@ -1,7 +1,5 @@
 package ventanas;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -34,32 +32,21 @@ public class V_Tienda extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField comp;
+	private String[] categorias = { "Todos", "Deportes", "Aventura", "Estrategia", "Acción" };
 	public JLabel fondos = new JLabel("");
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					V_Tienda frame = new V_Tienda(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	public V_Tienda(Usuario u) {
-		setTitle("Tienda");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 640, 421);
+		setTitle("Tienda");
+		setVisible(true);
+		setSize(640, 421);
+		setLocationRelativeTo(null);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
 		List<Juego> juegos = new ArrayList<Juego>();
-
-		String[] categorias = { "Todos", "Deportes", "Aventura", "Estrategia", "Acción" };
 
 		JPanel panel_3 = new JPanel();
 
@@ -236,7 +223,7 @@ public class V_Tienda extends JFrame {
 								.addComponent(btnBuscarJuego))));
 		panel_2.setLayout(gl_panel_2);
 
-		JComboBox comboBox = new JComboBox(categorias);
+		JComboBox<String> comboBox = new JComboBox<String>(categorias);
 
 		JButton btnNewButton = new JButton("Buscar");
 		btnNewButton.addActionListener(new ActionListener() {
