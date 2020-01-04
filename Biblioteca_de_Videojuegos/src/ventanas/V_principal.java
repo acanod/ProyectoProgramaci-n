@@ -20,6 +20,7 @@ public class V_principal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel botones;
+	private JPanel labels;
 	private JButton btnTienda;
 
 	/**
@@ -35,6 +36,25 @@ public class V_principal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPane, BorderLayout.NORTH);
 		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 5));
+		
+		labels = new JPanel();
+		getContentPane().add(labels, BorderLayout.CENTER);
+		
+		JLabel lNombre = new JLabel("Nombre "+u.getNombre());
+		JLabel lApellido = new JLabel("Apellido "+u.getApellido());
+		JLabel lEmail = new JLabel("Email "+u.getEmail());
+		JLabel lFecha = new JLabel("Fecha "+u.getFecha_naci());
+		JLabel lPass = new JLabel("Password "+u.getPassword());
+		JLabel lSaldo = new JLabel("Saldo "+u.getSaldo());
+		JLabel lJuegos = new JLabel("Numero de Juegos "+u.getNumeroDeJuegos());
+		
+		labels.add(lNombre);
+		labels.add(lApellido);
+		labels.add(lEmail);
+		labels.add(lFecha);
+		labels.add(lPass);
+		labels.add(lSaldo);
+		labels.add(lJuegos);
 		
 		botones = new JPanel();
 		getContentPane().add(botones, BorderLayout.SOUTH);
