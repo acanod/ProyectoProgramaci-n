@@ -3,7 +3,9 @@ package ventanas;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.ArrayList;
+
 import javax.swing.*;
 
 import base_de_datos.BaseDeDatos;
@@ -19,6 +21,7 @@ public class V_registro extends JFrame{
 	private JTextField email;
 	private JComboBox<String> pais;
 	private JTextField fecha;
+	private JCheckBox admin;
 	
 	public V_registro() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,7 +40,7 @@ public class V_registro extends JFrame{
 
 		JButton registrar = new JButton ("Registrar");
 		constraints.gridx = 0;
-		constraints.gridy = 6;
+		constraints.gridy = 7;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		constraints.anchor = GridBagConstraints.PAGE_END;
@@ -48,7 +51,7 @@ public class V_registro extends JFrame{
 
 		JButton atras = new JButton ("Atras");
 		constraints.gridx = 2;
-		constraints.gridy = 6;
+		constraints.gridy = 7;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		constraints.anchor = GridBagConstraints.PAGE_END;
@@ -193,6 +196,28 @@ public class V_registro extends JFrame{
 		constraints.weighty = 0.0;
 		constraints.fill = GridBagConstraints.CENTER;
 		
+		JLabel lAdmin = new JLabel("Admin");
+		constraints.gridx = 0;
+		constraints.gridy = 6;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.weightx = 1.0;
+		constraints.weighty = 0.05;
+		getContentPane().add(lAdmin, constraints);
+		
+		admin = new JCheckBox();
+		constraints.gridx = 2;
+		constraints.gridy = 6;
+		constraints.gridwidth = 3;
+		constraints.gridheight = 1;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.weightx = 1.0;
+		constraints.weighty = 0.05;
+		getContentPane().add(admin, constraints);
+		constraints.weightx = 0.0;
+		constraints.weighty = 0.0;
+		constraints.fill = GridBagConstraints.CENTER;
+		
 		registrar.addActionListener(new ActionListener() {
 			
 			@Override
@@ -201,14 +226,43 @@ public class V_registro extends JFrame{
 				char[] contra = password.getPassword();
 				String contr = new String(contra);
 				
-				Usuario registrar = new Usuario(nombre.getText(), apellido.getText(), contr, fecha.getText(), email.getText(),
-						pais.getSelectedItem().toString(), 0, 50);
-				
-				if(BaseDeDatos.insertarUsuario(registrar)) {
-					V_registro.this.setVisible(false);
-					new V_principal(registrar).setVisible(true);;
+				boolean administrador;
+				if(admin.isSelected()) {
+					administrador = true;
 				} else {
-					JOptionPane.showMessageDialog(null,"Error a la hora de añadir el usuario");
+					administrador = false;
+				}
+				
+				Usuario registrar = new Usuario(nombre.getText(), apellido.getText(), contr, fecha.getText(), email.getText(),
+						pais.getSelectedItem().toString(), 0, 50, administrador);
+				ArrayList<Usuario> lista = BaseDeDatos.verTodosUsuarios();
+				try {
+					if(lista.isEmpty()) {
+						if(BaseDeDatos.insertarUsuario(registrar)) {
+							V_registro.this.setVisible(false);
+							new V_principal(registrar).setVisible(true);;
+						} else {
+							JOptionPane.showMessageDialog(null,"Error a la hora de añadir el usuario");
+						}
+					} else {
+						for(int i = 0; i <= lista.size(); i++) {
+							if(lista.get(i).getNombre() == registrar.getNombre()) {
+								JOptionPane.showMessageDialog(null, "Este usuario ya existe", "Atencion", JOptionPane.WARNING_MESSAGE);
+							} else {
+								if(BaseDeDatos.insertarUsuario(registrar)) {
+									V_registro.this.setVisible(false);
+									new V_principal(registrar).setVisible(true);
+									break;
+								} else {
+									JOptionPane.showMessageDialog(null,"Error a la hora de añadir el usuario");
+									break;
+								}
+							}
+						}
+					}
+				} catch (HeadlessException | ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
