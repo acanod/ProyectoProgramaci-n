@@ -1,9 +1,5 @@
 package base_de_datos;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Date;
 
@@ -12,18 +8,12 @@ import datos.*;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 public class BaseDeDatos {
 
@@ -43,15 +33,15 @@ public class BaseDeDatos {
 			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5433/VideoJuegos", "postgres", "postgres");
 			Statement statement = connection.createStatement();
 
-			statement.executeUpdate("CREATE TABLE IF NOT EXISTS usuario (cod_usuario SMALLSERIAL PRIMARY KEY, nombre VARCHAR(35), apellido CHAR(20), password VARCHAR(30) NOT NULL, fecha_naci DATE, email CHAR(20),"
+			statement.executeUpdate("CREATE TABLE IF NOT EXISTS usuario (nombreUsuario VARCHAR(35) PRIMARY KEY NOT NULL, apellido CHAR(20), password VARCHAR(30) NOT NULL, fecha_naci DATE, email CHAR(20),"
 					+ " pais CHAR(35), numero_juegos INT, saldo REAL, admin BOOLEAN);");
 			
-			statement.executeUpdate("CREATE TABLE IF NOT EXISTS juego (cod_jue SMALLSERIAL PRIMARY KEY, nombre CHAR(20) NOT NULL, edad_necesaria INT, categoria CHAR(20) NOT NULL, precio INT,"
-					+ " prestamo BOOLEAN, imagen BYTEA);");
+			statement.executeUpdate("CREATE TABLE IF NOT EXISTS juego (nombreJuego VARCHAR(120) PRIMARY KEY NOT NULL, edad_necesaria INT, categoria CHAR(20) NOT NULL, precio INT,"
+					+ " prestamo BOOLEAN);");
 			
-			statement.executeUpdate("CREATE TABLE IF NOT EXISTS amigos (nombre SMALLSERIAL NOT NULL, amigo SMALLSERIAL NOT NULL, FOREIGN KEY (nombre) REFERENCES usuario (cod_usuario), FOREIGN KEY (amigo) REFERENCES usuario (cod_usuario));");
+			statement.executeUpdate("CREATE TABLE IF NOT EXISTS amigos (nombre VARCHAR(35) NOT NULL, amigo VARCHAR(120) NOT NULL, FOREIGN KEY (nombre) REFERENCES usuario (nombreUsuario), FOREIGN KEY (amigo) REFERENCES usuario (nombreUsuario));");
 			
-			statement.executeUpdate("CREATE TABLE IF NOT EXISTS biblioteca (nombre SMALLSERIAL, cod_jue SMALLSERIAL, FOREIGN KEY (nombre) REFERENCES usuario (cod_usuario), FOREIGN KEY (cod_jue) REFERENCES juego (cod_jue));");
+			statement.executeUpdate("CREATE TABLE IF NOT EXISTS biblioteca (nombreUsuario VARCHAR(35), nombreJuego VARCHAR(120), FOREIGN KEY (nombreUsuario) REFERENCES usuario (nombreUsuario), FOREIGN KEY (nombreJuego) REFERENCES juego (nombreJuego));");
 			
 			log(Level.INFO, "Base de datos conectada", null);
 		} catch(ClassNotFoundException | SQLException e) {
@@ -99,7 +89,7 @@ public class BaseDeDatos {
 		try {
 		    Date date = Date.valueOf(usuario.getFecha_naci());
 			
-			String consulta = "INSERT INTO usuario (nombre, apellido, password, fecha_naci, email, pais, numero_juegos, saldo, admin)";
+			String consulta = "INSERT INTO usuario (nombreUsuario, apellido, password, fecha_naci, email, pais, numero_juegos, saldo, admin)";
 			consulta = consulta+" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		    PreparedStatement ps = connection.prepareStatement(consulta);
 		    ps.setString(1, usuario.getNombre());
@@ -131,8 +121,9 @@ public class BaseDeDatos {
 	public static void ainadirDinero(Usuario u, double saldo) {
 		try {
 			statement = connection.createStatement();
-			double nuevoSaldo = u.getSaldo()+saldo;
-			statement.executeUpdate("UPDATE usuario SET saldo = "+nuevoSaldo+" WHERE nombre = '"+u.getNombre()+"';");
+			
+			statement.executeUpdate("UPDATE usuario SET saldo = "+(u.getSaldo()+saldo)+" WHERE nombreUsuario = '"+u.getNombre()+"';");
+			statement.close();
 			log(Level.INFO, "Saldo = "+saldo+" añadido a "+u.getNombre(), null);
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -149,7 +140,7 @@ public class BaseDeDatos {
 		try {
 			statement = connection.createStatement();
 			double nuevoSaldo = u.getSaldo()-saldo;
-			statement.executeUpdate("UPDATE usuario SET saldo = "+nuevoSaldo+" WHERE nombre = '"+u.getNombre()+"';");
+			statement.executeUpdate("UPDATE usuario SET saldo = "+nuevoSaldo+" WHERE nombreUsuario = '"+u.getNombre()+"';");
 			log(Level.INFO, "Saldo = "+saldo+" restado a "+u.getNombre(), null);
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -164,18 +155,17 @@ public class BaseDeDatos {
 			rs = statement.executeQuery("SELECT * FROM usuario;");
 			while(rs.next()) {
 				// Se saca por consola info de la tabla
-				System.out.println("Codigo = " + rs.getInt(1));
-				System.out.println("Nombre = " + rs.getString(2));
-				System.out.println("Apellido = " + rs.getString(3));
-				System.out.println("Password = " + rs.getString(4));
-				System.out.println("Fecha nacimiento = " + rs.getString(5));
-				System.out.println("Email = " + rs.getString(6));
-				System.out.println("Pais = " + rs.getString(7));
-				System.out.println("Numero de juegos = " + rs.getInt(8));
-				System.out.println("Saldo = " + rs.getDouble(9));
-				System.out.println("Admin = " + rs.getBoolean(10));
-				lista.add(new Usuario(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), 
-			rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9), rs.getBoolean(10)));
+				System.out.println("Nombre = " + rs.getString(1));
+				System.out.println("Apellido = " + rs.getString(2));
+				System.out.println("Password = " + rs.getString(3));
+				System.out.println("Fecha nacimiento = " + rs.getString(4));
+				System.out.println("Email = " + rs.getString(5));
+				System.out.println("Pais = " + rs.getString(6));
+				System.out.println("Numero de juegos = " + rs.getInt(7));
+				System.out.println("Saldo = " + rs.getDouble(8));
+				System.out.println("Admin = " + rs.getBoolean(9));
+				lista.add(new Usuario(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), 
+			rs.getString(5), rs.getString(6), rs.getInt(7), rs.getDouble(8), rs.getBoolean(9)));
 			}
 			rs.close();
 			log(Level.INFO, "Seleccionados todos los usuario", null);
@@ -196,22 +186,21 @@ public class BaseDeDatos {
 	public static Usuario verUsuario(Usuario usuario) {
 		try {
 			statement = connection.createStatement();
-			rs = statement.executeQuery("SELECT * FROM usuario WHERE nombre = '"+usuario.getNombre()+"';");
+			rs = statement.executeQuery("SELECT * FROM usuario WHERE nombreUsuario = '"+usuario.getNombre()+"';");
 			Usuario visto = null;
 			while(rs.next()) {
 				// Se saca por consola info de la tabla
-				System.out.println("Codigo = " + rs.getInt(1));
-				System.out.println("Nombre = " + rs.getString(2));
-				System.out.println("Apellido = " + rs.getString(3));
-				System.out.println("Password = " + rs.getString(4));
-				System.out.println("Fecha nacimiento = " + rs.getString(5));
-				System.out.println("Email = " + rs.getString(6));
-				System.out.println("Pais = " + rs.getString(7));
-				System.out.println("Numero de juegos = " + rs.getInt(8));
-				System.out.println("Saldo = " + rs.getDouble(9));
-				System.out.println("Saldo = " + rs.getBoolean(10));
-				visto = new Usuario(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
-						rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9), rs.getBoolean(10));
+				System.out.println("Nombre = " + rs.getString(1));
+				System.out.println("Apellido = " + rs.getString(2));
+				System.out.println("Password = " + rs.getString(3));
+				System.out.println("Fecha nacimiento = " + rs.getString(4));
+				System.out.println("Email = " + rs.getString(5));
+				System.out.println("Pais = " + rs.getString(6));
+				System.out.println("Numero de juegos = " + rs.getInt(7));
+				System.out.println("Saldo = " + rs.getDouble(8));
+				System.out.println("Admin = " + rs.getBoolean(9));
+				visto = new Usuario(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), 
+						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getDouble(8), rs.getBoolean(9));
 			}
 			rs.close();
 			log(Level.INFO, "Seleccionado el usuario " + usuario.getNombre(), null);
@@ -231,16 +220,15 @@ public class BaseDeDatos {
 	public static Juego verJuego(Juego juego) {
 		try {
 			statement = connection.createStatement();
-			rs = statement.executeQuery("SELECT * FROM juego WHERE nombre = '"+juego.getNombre()+"';");
+			rs = statement.executeQuery("SELECT * FROM juego WHERE nombreJuego = '"+juego.getNombre()+"';");
 			Juego juegoCompleto = null;
 			while (rs.next()){
-				System.out.println("Codigo = "+rs.getInt(1));
-				System.out.println("Nombre = "+rs.getString(2));
-				System.out.println("Edad necesaria = "+rs.getInt(3));
-				System.out.println("Categoria = "+rs.getString(4));
-				System.out.println("Precio = "+rs.getDouble(5));
-				System.out.println("Prestamo = "+rs.getBoolean(6));
-				juegoCompleto = new Juego(rs.getString(2), rs.getInt(3), rs.getString(4), rs.getDouble(5), rs.getBoolean(6), null);
+				System.out.println("Nombre = "+rs.getString(1));
+				System.out.println("Edad necesaria = "+rs.getInt(2));
+				System.out.println("Categoria = "+rs.getString(3));
+				System.out.println("Precio = "+rs.getDouble(4));
+				System.out.println("Prestamo = "+rs.getBoolean(5));
+				juegoCompleto = new Juego(rs.getString(1), rs.getInt(2), rs.getString(3), rs.getDouble(4), rs.getBoolean(5), null);
 			}
 			rs.close();
 			log(Level.INFO, "Seleccionado el juego " + juego.getNombre(), null);
@@ -261,12 +249,12 @@ public class BaseDeDatos {
 			statement = connection.createStatement();
 			rs = statement.executeQuery("SELECT * FROM juego;");
 			while(rs.next()) {
-				System.out.println("Nombre = "+rs.getString(2));
-				System.out.println("Edad necesaria = "+rs.getInt(3));
-				System.out.println("Categoria = "+rs.getString(4));
-				System.out.println("Precio = "+rs.getDouble(5));
-				System.out.println("Prestamo = "+rs.getBoolean(6));
-				juegos.add(new Juego(rs.getString(2), rs.getInt(3), rs.getString(4), rs.getDouble(5), rs.getBoolean(6), null));
+				System.out.println("Nombre = "+rs.getString(1));
+				System.out.println("Edad necesaria = "+rs.getInt(2));
+				System.out.println("Categoria = "+rs.getString(3));
+				System.out.println("Precio = "+rs.getDouble(4));
+				System.out.println("Prestamo = "+rs.getBoolean(5));
+				juegos.add(new Juego(rs.getString(1), rs.getInt(2), rs.getString(3), rs.getDouble(4), rs.getBoolean(5), null));
 			}
 			rs.close();
 			log(Level.INFO, "Seleccionados todos los juegos", null);
@@ -287,7 +275,7 @@ public class BaseDeDatos {
 	public static boolean eliminarJuego(Juego juego) {	
 		try {
 			statement = connection.createStatement();
-			String sql ="DELETE FROM juego WHERE nombre = '"+juego.getNombre()+"';";
+			String sql ="DELETE FROM juego WHERE nombreJuego = '"+juego.getNombre()+"';";
 			statement.executeUpdate(sql);
 			
 			log(Level.INFO, juego + "eliminado de la base de datos", null);
@@ -305,28 +293,21 @@ public class BaseDeDatos {
 	 * @throws SQLException
 	 */
 	public static boolean insertarJuego(Juego juego) {
-		InputStream is = null;
 		try {
-			String consulta = "INSERT INTO juego (nombre, edad_necesaria, categoria, precio, prestamo, imagen)";
-			consulta = consulta+" VALUES (?, ?, ?, ?, ?, ?);";
+			String consulta = "INSERT INTO juego (nombreJuego, edad_necesaria, categoria, precio, prestamo)";
+			consulta = consulta+" VALUES (?, ?, ?, ?, ?);";
 		    PreparedStatement ps = connection.prepareStatement(consulta);
 		    ps.setString(1, juego.getNombre());
 		    ps.setInt(2, juego.getEdadnecesaria());
 		    ps.setString(3, juego.getCategoria());
 		    ps.setDouble(4, juego.getPrecio());
 		    ps.setBoolean(5, juego.isPrestamo());
-		    is = new FileInputStream(new File("/img/"+juego.getNombre()+".jpg"));
-		    ps.setBinaryStream(6, is);
-
+		    
 			ps.executeUpdate();
 			log(Level.INFO, juego.getNombre()+" añadido a la base de datos", null);
 			return true;
 		} catch (SQLException e) {
 			log(Level.SEVERE, "Error a la hora de insertar el juego "+juego.getNombre(), e);
-			return false;
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			return false;
 		}
 	}
@@ -339,10 +320,10 @@ public class BaseDeDatos {
 	 */
 	public static boolean nuevoJuego(Usuario u, Juego j) {
 		try {
-			String consulta = "INSERT INTO biblioteca (nombre, cod_jue) VALUES (?, ?);";
+			String consulta = "INSERT INTO biblioteca (nombreUsuario, nombreJuego) VALUES (?, ?);";
 		    PreparedStatement ps = connection.prepareStatement(consulta);
-		    ps.setInt(1, u.getCodigo());
-		    ps.setInt(2, j.getCodigo());
+		    ps.setString(1, u.getNombre());
+		    ps.setString(2, j.getNombre());
 		    
 		    ps.executeUpdate();
 			log(Level.INFO,"El nuevo juego "+j.getNombre()+" de "+u.getNombre()+" añadido a la base de datos", null);
@@ -362,12 +343,16 @@ public class BaseDeDatos {
 	public static ArrayList<Juego> juegos(Usuario u) {
 		try {
 			ArrayList<Juego> juegos = new ArrayList<Juego>();
+			String nombre = "";
 			statement = connection.createStatement();
-			rs = statement.executeQuery("SELECT * FROM biblioteca WHERE nombre = '"+u.getCodigo()+"';");
+			rs = statement.executeQuery("SELECT * FROM biblioteca WHERE nombreUsuario = '"+u.getNombre()+"';");
 			while(rs.next()) {
-				juegos.add(new Juego(rs.getString(2), rs.getInt(3), rs.getString(4), rs.getDouble(5), rs.getBoolean(6), (JLabel)rs.getBlob(7)));
+				nombre = rs.getString(2);
 			}
-			
+			rs = statement.executeQuery("SELECT * FROM juego WHERE nombreJuego = '"+nombre+"';");
+			while(rs.next()) {
+				juegos.add(new Juego(rs.getString(1), rs.getInt(2), rs.getString(3), rs.getDouble(4), rs.getBoolean(5), null));
+			}
 			rs.close();
 			log(Level.INFO,"Lista de juegos del usuario "+u.getNombre(), null);
 			return juegos;
@@ -387,11 +372,19 @@ public class BaseDeDatos {
 		try {
 			ArrayList<Usuario> lista = new ArrayList<Usuario>();
 			statement = connection.createStatement();
-			rs = statement.executeQuery("SELECT * FROM amigos WHERE nombre = '"+u.getCodigo()+"';");
+			rs = statement.executeQuery("SELECT * FROM amigos WHERE nombre = '"+u.getNombre()+"';");
+			ArrayList<String> amigos = new ArrayList<String>();
 			while(rs.next()) {
-				lista.add(new Usuario(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
-						rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9), rs.getBoolean(10)));
+				amigos.add(rs.getString(2));
 			}
+			for(int i=0; i<amigos.size();i++) {
+				rs = statement.executeQuery("SELECT * FROM usuario WHERE nombreUsuario = '"+amigos.get(i)+"';");	
+			}
+			while(rs.next()) {
+				lista.add(new Usuario(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), 
+						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getDouble(8), rs.getBoolean(9)));
+			}
+			
 			rs.close();
 			log(Level.INFO, "Lista de amigos de "+u.getNombre(), null);
 			return lista;
@@ -412,8 +405,8 @@ public class BaseDeDatos {
 		try {
 			String consulta = "INSERT INTO amigos (nombre, amigo) VALUES (?, ?);";
 		    PreparedStatement ps = connection.prepareStatement(consulta);
-		    ps.setInt(1, u1.getCodigo());
-		    ps.setInt(2, u2.getCodigo());
+		    ps.setString(1, u1.getNombre());
+		    ps.setString(2, u2.getNombre());
 
 			ps.executeUpdate();
 			log(Level.INFO, u1.getNombre()+" es amigo de "+u2.getNombre(), null);
@@ -431,7 +424,7 @@ public class BaseDeDatos {
 	 */
 	public static Usuario comprobarLogin(Usuario usuario) {
 		try {
-			String consulta ="SELECT * FROM usuario WHERE nombre = ? AND password = ?;";
+			String consulta ="SELECT * FROM usuario WHERE nombreUsuario = ? AND password = ?;";
 			PreparedStatement ps = connection.prepareStatement(consulta);
 			ps.setString(1, usuario.getNombre());
 			ps.setString(2, usuario.getPassword());
@@ -441,8 +434,7 @@ public class BaseDeDatos {
 			while(rs.next()) {
 				// Se saca por consola info de la tabla
 				System.out.println("COMPROBAR LOGIN");
-				System.out.println("Codigo = "+ rs.getInt(1));
-				System.out.println("Nombre = " + rs.getString("nombre"));
+				System.out.println("Nombre = " + rs.getString("nombreUsuario"));
 				System.out.println("Apellido = " + rs.getString("apellido"));
 				System.out.println("Password = " + rs.getString("password"));
 				System.out.println("Fecha nacimiento = " + rs.getString("fecha_naci"));
@@ -450,9 +442,9 @@ public class BaseDeDatos {
 				System.out.println("Pais = " + rs.getString("pais"));
 				System.out.println("Numero de juegos = " + rs.getInt("numero_juegos"));
 				System.out.println("Saldo = " + rs.getDouble("saldo"));
-				System.out.println("Saldo = " + rs.getBoolean("admin"));
-				registrado = new Usuario(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
-						rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9), rs.getBoolean(10));
+				System.out.println("Admin = " + rs.getBoolean("admin"));
+				registrado = new Usuario(rs.getString("nombreUsuario"), rs.getString("apellido"), rs.getString("password"), rs.getString("fecha_naci"), 
+						rs.getString("email"), rs.getString("pais"), rs.getInt("numero_juegos"), rs.getDouble("saldo"), rs.getBoolean("admin"));
 			}
 			rs.close();
 			ps.close();
@@ -483,49 +475,4 @@ public class BaseDeDatos {
 			logger.log(level, msg, excepcion);
 	}
 	
-	/**
-	 * Visualiza todos los usuarios que hay en la base de datos para crear una tabla
-	 * @return Nombre y apellido de los usuarios guardados
-	 */
-	public static JTable creadorTabla() {
-		try {
-			statement = connection.createStatement();
-			rs = statement.executeQuery("SELECT * FROM usuario");
-			ResultSetMetaData metaDatos = rs.getMetaData();
-			
-			int numeroColumnas = metaDatos.getColumnCount();
-			DefaultTableModel modelo = new DefaultTableModel();
-			JTable tabla = new JTable(modelo);
-			Object[] etiquetas = new Object[numeroColumnas];
-			//Crea las cabeceras del JTable
-			for (int i = 0; i < numeroColumnas; i++) {
-				etiquetas[i] = metaDatos.getColumnLabel(i + 1);
-				modelo.setColumnIdentifiers(etiquetas);
-			}
-			//Crea las filas para el JTable
-			while(rs.next()) {
-				Object[] fila = new Object[numeroColumnas];
-				for (int i = 0; i < numeroColumnas; i++) {
-					fila[i]=rs.getObject(i+1);
-				}
-				modelo.addRow(fila);
-			}
-			rs.close();
-			log(Level.INFO, "Lista de usuarios", null);
-			return tabla;
-		} catch (SQLException e) {
-			log(Level.SEVERE, "Error, no se han podidio visualizar los usuarios", e);
-			return null;
-		}
-	}
-	
-	public static void borrarFilaDeTabla(JTable tabla) {
-		DefaultTableModel dtm = (DefaultTableModel) tabla.getModel();
-		if(tabla.getSelectedRow()==-1) {
-			JOptionPane.showMessageDialog(null, "Debe elegir una fila", "Error", JOptionPane.ERROR_MESSAGE);
-		} else {
-			dtm.removeRow(tabla.getSelectedRow());
-		}
-	}
-
 }

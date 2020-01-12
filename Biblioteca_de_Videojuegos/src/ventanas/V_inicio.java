@@ -106,7 +106,7 @@ public class V_inicio extends JFrame {
 				} else {
 					Usuario iniciar = new Usuario(nombre.getText(), contr);
 					Usuario inicio = BaseDeDatos.comprobarLogin(iniciar);
-					new V_principal(inicio).setVisible(true);
+					new V_principal(inicio, BaseDeDatos.verTodosUsuarios(), BaseDeDatos.verTodosJuegos()).setVisible(true);
 					V_inicio.this.setVisible(false);
 				}
 			}
@@ -120,4 +120,5 @@ public class V_inicio extends JFrame {
 		});
 		
 	}
+	
 }

@@ -2,8 +2,6 @@ package datos;
 
 import static org.junit.Assert.*;
 
-import javax.swing.JLabel;
-
 import org.junit.Before;
 import org.junit.Test;
 

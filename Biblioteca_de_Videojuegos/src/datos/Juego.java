@@ -3,7 +3,6 @@ import javax.swing.JLabel;
 
 public class Juego {
 	
-	private int codigo;
 	private String nombre;
 	private int edadnecesaria;
 	private String categoria;
@@ -11,8 +10,7 @@ public class Juego {
 	private boolean prestamo;
 	private JLabel caratula;
 	
-	public Juego(int codigo, String nombre, int edadnecesaria, String categoria, double precio, boolean prestamo) {
-		this.codigo = codigo;
+	public Juego(String nombre, int edadnecesaria, String categoria, double precio, boolean prestamo) {
 		this.nombre = nombre;
 		this.edadnecesaria = edadnecesaria;
 		this.categoria = categoria;
@@ -76,14 +74,6 @@ public class Juego {
 	
 	public void setCaratula(JLabel caratula) {
 		this.caratula=caratula;
-	}
-
-	public int getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
 	}
 	
 }

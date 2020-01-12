@@ -240,7 +240,7 @@ public class V_registro extends JFrame{
 					if(lista.isEmpty()) {
 						if(BaseDeDatos.insertarUsuario(registrar)) {
 							V_registro.this.setVisible(false);
-							new V_principal(registrar).setVisible(true);;
+							new V_principal(registrar, BaseDeDatos.verTodosUsuarios(), BaseDeDatos.verTodosJuegos()).setVisible(true);
 						} else {
 							JOptionPane.showMessageDialog(null,"Error a la hora de añadir el usuario");
 						}
@@ -251,7 +251,7 @@ public class V_registro extends JFrame{
 							} else {
 								if(BaseDeDatos.insertarUsuario(registrar)) {
 									V_registro.this.setVisible(false);
-									new V_principal(registrar).setVisible(true);
+									new V_principal(registrar,BaseDeDatos.verTodosUsuarios(),BaseDeDatos.verTodosJuegos()).setVisible(true);
 									break;
 								} else {
 									JOptionPane.showMessageDialog(null,"Error a la hora de añadir el usuario");

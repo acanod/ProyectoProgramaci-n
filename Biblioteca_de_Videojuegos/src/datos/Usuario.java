@@ -4,7 +4,6 @@ import java.util.List;
 
 public class Usuario {
 
-	private int codigo;
 	private String nombre;
 	private String apellido;
 	private String password;
@@ -20,21 +19,6 @@ public class Usuario {
 		this.nombre = nombre;
 		this.password = password;
 	}
-	
-	public Usuario(int codigo, String nombre, String apellido, String password, String fecha_naci, 
-			String email, String pais, int numeroDeJuegos, double saldo, boolean admin) {
-		super();
-		this.codigo = codigo;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.password = password;
-		this.fecha_naci = fecha_naci;
-		this.email = email;
-		this.pais = pais;
-		this.numeroDeJuegos = numeroDeJuegos;
-		this.saldo = saldo;
-		this.admin = admin;
-	}   
 	
 	public Usuario(String nombre, String apellido, String password, String fecha_naci, 
 			String email, String pais, int numeroDeJuegos, double saldo, boolean admin) {
@@ -134,11 +118,4 @@ public class Usuario {
 		this.admin = admin;
 	}
 
-	public int getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
-	}
 }
