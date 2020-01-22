@@ -3,15 +3,14 @@ package ventanas;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.*;
 
-import base_de_datos.BaseDeDatos;
+import datos.Gestion;
 import datos.Usuario;
 
-public class V_registro extends JFrame{
+public class VRegistro extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 	private String[] listaPais = {"Alemania", "España", "Francia", "Italia", "Portugal"};
@@ -23,7 +22,7 @@ public class V_registro extends JFrame{
 	private JTextField fecha;
 	private JCheckBox admin;
 	
-	public V_registro() {
+	public VRegistro() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(Toolkit.getDefaultToolkit().getScreenSize().width/3, Toolkit.getDefaultToolkit().getScreenSize().height/2);
 		setLocationRelativeTo(null);
@@ -219,7 +218,6 @@ public class V_registro extends JFrame{
 		constraints.fill = GridBagConstraints.CENTER;
 		
 		registrar.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -235,45 +233,20 @@ public class V_registro extends JFrame{
 				
 				Usuario registrar = new Usuario(nombre.getText(), apellido.getText(), contr, fecha.getText(), email.getText(),
 						pais.getSelectedItem().toString(), 0, 50, administrador);
-				ArrayList<Usuario> lista = BaseDeDatos.verTodosUsuarios();
-				try {
-					if(lista.isEmpty()) {
-						if(BaseDeDatos.insertarUsuario(registrar)) {
-							V_registro.this.setVisible(false);
-							new V_principal(registrar, BaseDeDatos.verTodosUsuarios(), BaseDeDatos.verTodosJuegos()).setVisible(true);
-						} else {
-							JOptionPane.showMessageDialog(null,"Error a la hora de añadir el usuario");
-						}
-					} else {
-						for(int i = 0; i <= lista.size(); i++) {
-							if(lista.get(i).getNombre() == registrar.getNombre()) {
-								JOptionPane.showMessageDialog(null, "Este usuario ya existe", "Atencion", JOptionPane.WARNING_MESSAGE);
-							} else {
-								if(BaseDeDatos.insertarUsuario(registrar)) {
-									V_registro.this.setVisible(false);
-									new V_principal(registrar,BaseDeDatos.verTodosUsuarios(),BaseDeDatos.verTodosJuegos()).setVisible(true);
-									break;
-								} else {
-									JOptionPane.showMessageDialog(null,"Error a la hora de añadir el usuario");
-									break;
-								}
-							}
-						}
-					}
-				} catch (HeadlessException | ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				
+				if(Gestion.registrarUsuario(registrar)) {
+					VRegistro.this.setVisible(false);
+					new VPrincipal(registrar, Gestion.todosLosUsuarios(), Gestion.todosLosJuegos()).setVisible(true);
 				}
 			}
 		});
 		
 		atras.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				V_registro.this.setVisible(false);
-				new V_inicio();
+				VRegistro.this.setVisible(false);
+				new VInicio();
 			}
 		});
 	}

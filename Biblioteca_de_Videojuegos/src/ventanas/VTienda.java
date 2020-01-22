@@ -6,7 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import base_de_datos.BaseDeDatos;
+import baseDeDatos.BaseDeDatos;
+import datos.Gestion;
 import datos.Juego;
 import datos.Usuario;
 
@@ -15,11 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,18 +24,17 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class V_Tienda extends JFrame {
+public class VTienda extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField comp;
 	public JLabel fondos = new JLabel("");
 
-	public V_Tienda(Usuario u, List<Juego> j) {
+	public VTienda(Usuario u, List<Juego> j) {
 		setTitle("Tienda");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 421);
@@ -50,19 +45,17 @@ public class V_Tienda extends JFrame {
 		setContentPane(contentPane);
 
 		for (int i = 0; i < j.size(); i++) {
-			funcionalidadCaratulas(i, j, u, V_Tienda.this);
+			Gestion.funcionalidadCaratulas(i, j, u, VTienda.this);
 		}
 
 		String[] categorias = { "Todos", "Deportes", "Aventura", "Estrategia", "Acción" };
 
 		JPanel panel_3 = new JPanel();
-
 		JPanel panel_2 = new JPanel();
+		JPanel panelSaldo = new JPanel();
 
 		comp = new JTextField();
 		comp.setColumns(10);
-
-		JPanel panelSaldo = new JPanel();
 
 		JLabel lblSaldoDisponible = new JLabel("Saldo disponible: ");
 
@@ -135,21 +128,29 @@ public class V_Tienda extends JFrame {
 		JButton btnNewButton = new JButton("Buscar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				List<String> gamesList = new ArrayList<String>();
 				for (int i = 0; i < j.size(); i++) {
-					j.get(i).getCaratula().setVisible(true);
+					gamesList.add(j.get(i).getCategoria().toUpperCase());
+					j.get(i).getCaratula().setVisible(false);
 				}
-				if (!comboBox.getSelectedItem().equals("Todos")) {
-					for (int i = 0; i < j.size(); i++) {
-						if (!j.get(i).getCategoria().equals(comboBox.getSelectedItem().toString())) {
-							j.get(i).getCaratula().setVisible(false);
-						}
+				String searching = comboBox.getSelectedItem().toString();
+				if(comboBox.getSelectedItem().equals("Todos")) {
+					for(int i = 0; i < j.size(); i++) {
+						j.get(i).getCaratula().setVisible(true);
+					}
+				}
+				for (int i = 0; i < gamesList.size(); i++) {
+					if (gamesList.get(i).contains(searching.toUpperCase())) {
+						j.get(i).getCaratula().setVisible(true);
 					}
 				}
 			}
+
 		});
 
 		JLabel lblBuscarPorCategoria = new JLabel("Categoria");
 		lblBuscarPorCategoria.setVerticalAlignment(SwingConstants.TOP);
+		
 		GroupLayout gl_panelBuscar = new GroupLayout(panelBuscar);
 		gl_panelBuscar.setHorizontalGroup(gl_panelBuscar.createParallelGroup(Alignment.LEADING).addGroup(gl_panelBuscar
 				.createSequentialGroup().addContainerGap()
@@ -163,6 +164,7 @@ public class V_Tienda extends JFrame {
 								GroupLayout.PREFERRED_SIZE)
 						.addGap(57).addComponent(btnNewButton).addGap(90)));
 		panelBuscar.setLayout(gl_panelBuscar);
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addComponent(panel_3,
 				GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE));
@@ -174,8 +176,7 @@ public class V_Tienda extends JFrame {
 		JButton btnAtras_1 = new JButton("Atras");
 		btnAtras_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				V_Tienda.this.dispose();
-				new V_principal(u, BaseDeDatos.verTodosUsuarios(), j);
+				VTienda.this.dispose();
 			}
 		});
 		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
@@ -212,17 +213,16 @@ public class V_Tienda extends JFrame {
 								.addPreferredGap(ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
 								.addComponent(btnAtras_1).addGap(27)))));
 
-		btnAtras_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				new V_principal(u, null, j).setVisible(true);
-				V_Tienda.this.dispose();
-			}
-		});
 		panel_3.setLayout(gl_panel_3);
 		contentPane.setLayout(gl_contentPane);
 
 	}
 
+	/**
+	 * Diseño de la ventana tienda
+	 * @param numero de juegos
+	 * @return dimension para la ventana
+	 */
 	public static Dimension calcularPanel(int numJ) {
 		Dimension resultado = new Dimension(500, 0);
 
@@ -236,31 +236,6 @@ public class V_Tienda extends JFrame {
 			resultado.setSize(resultado.getWidth(), (rows / 5) * 100);
 		}
 		return resultado;
-	}
-	
-	/**
-	 * Abre la ventana de informacion del juego al que se le ha dado clic
-	 * @param numero que recorre la lista de juegos
-	 * @param Lista de juego
-	 * @param u 
-	 * @param t 
-	 */
-	public static void funcionalidadCaratulas(int numero, List<Juego> juego, Usuario u, V_Tienda t) {
-		for (MouseListener al : juego.get(numero).getCaratula().getMouseListeners()) {
-			juego.get(numero).getCaratula().removeMouseListener(al);
-		}
-		juego.get(numero).getCaratula().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				try {
-					new V_JuegoInfo(BaseDeDatos.verJuego(juego.get(numero)), BaseDeDatos.verUsuario(u), t, BaseDeDatos.verTodosUsuarios()).setVisible(true);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			}
-		});
 	}
 	
 }

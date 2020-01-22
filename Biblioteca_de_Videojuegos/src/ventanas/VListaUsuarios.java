@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import base_de_datos.BaseDeDatos;
+import baseDeDatos.BaseDeDatos;
 import datos.Juego;
 import datos.Usuario;
 
@@ -22,14 +22,14 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class V_ListaUsuarios extends JFrame {
+public class VListaUsuarios extends JFrame {
 
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtSearch;
 
-	public V_ListaUsuarios(Usuario u, List<Usuario> users, List<Juego> j) {
+	public VListaUsuarios(Usuario u, List<Usuario> users, List<Juego> j) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 532);
 		contentPane = new JPanel();
@@ -39,7 +39,7 @@ public class V_ListaUsuarios extends JFrame {
 		JPanel panelBuscar = new JPanel();
 
 		JList<String> listaUsuarios = new JList<String>();
-		listaUsuarios.setModel(inicializarListaA(u, users));
+		listaUsuarios.setModel(inicializarListaA(u, BaseDeDatos.verTodosUsuarios()));
 
 		JScrollPane scrollPaneLista = new JScrollPane(listaUsuarios);
 		scrollPaneLista.setBorder(BorderFactory.createTitledBorder("Lista de Usuarios"));
@@ -48,8 +48,8 @@ public class V_ListaUsuarios extends JFrame {
 		bAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				new V_Amigos(u, users, j).setVisible(true);
-				V_ListaUsuarios.this.setVisible(false);
+				new VAmigos(u, BaseDeDatos.verTodosUsuarios(), j).setVisible(true);
+				VListaUsuarios.this.setVisible(false);
 
 			}
 		});
@@ -125,20 +125,17 @@ public class V_ListaUsuarios extends JFrame {
 	public static DefaultListModel<String> inicializarListaA(Usuario u, List<Usuario> list) {
 		DefaultListModel<String> listaBien = new DefaultListModel<String>();
 		
-		int x = 0;
+
 		for (int i = 0; i < list.size(); i++) {
 			boolean esAmigo=false;
 			for(int z=0; z<BaseDeDatos.listaDeAmigos(u).size();z++) {
-				if(list.get(i).getNombre().equals(BaseDeDatos.listaDeAmigos(u).get(z).getNombre())) {
+				if(list.get(i).getNombre().equals(BaseDeDatos.listaDeAmigos(u).get(z))) {
 					esAmigo=true;
 				}
 			}
-			if (!list.get(i).getNombre().equals(u.getNombre()) && esAmigo==false) {
-				listaBien.add(x, list.get(i).getNombre());
-			} else {
-				x--;
-			}
-			x++;	
+			if (!(list.get(i).getNombre().equals(u.getNombre())) && esAmigo==false) {
+				listaBien.addElement(list.get(i).getNombre());
+			}	
 		}
 		return listaBien;
 	}

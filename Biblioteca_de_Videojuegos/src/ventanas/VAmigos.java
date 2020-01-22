@@ -5,26 +5,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.*;
 
-import base_de_datos.BaseDeDatos;
+import baseDeDatos.BaseDeDatos;
 import datos.Juego;
 import datos.Usuario;
 
-public class V_Amigos extends JFrame {
+public class VAmigos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	public V_Amigos(Usuario u, List<Usuario> users, List<Juego> j) {
+	public VAmigos(Usuario u, List<Usuario> users, List<Juego> j) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(Toolkit.getDefaultToolkit().getScreenSize().width / 2,
 				Toolkit.getDefaultToolkit().getScreenSize().height / 3);
 		setLocationRelativeTo(null);
 		setTitle("Amigos");
 		setResizable(true);
-		componentes(u, BaseDeDatos.verTodosUsuarios(),BaseDeDatos.verTodosJuegos());
+		componentes(u, BaseDeDatos.verTodosUsuarios(), BaseDeDatos.verTodosJuegos());
 		setVisible(true);
 	}
 
@@ -44,8 +45,13 @@ public class V_Amigos extends JFrame {
 		listamigos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int index = listamigos.getSelectedIndex();
-				juegos.setModel(inicializarListaJ(BaseDeDatos.juegos(BaseDeDatos.listaDeAmigos(u).get(index))));
+				Usuario elegido=null;
+				for(int i=0; i<users.size();i++) {
+					if(listamigos.getSelectedValue().equals(users.get(i).getNombre())) {
+						elegido=users.get(i);
+					}
+				}
+				juegos.setModel(inicializarListaJ(BaseDeDatos.juegos(elegido)));
 			}
 		});
 
@@ -64,50 +70,24 @@ public class V_Amigos extends JFrame {
 
 		buscarA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new V_ListaUsuarios(u, BaseDeDatos.verTodosUsuarios(),BaseDeDatos.verTodosJuegos()).setVisible(true);
-				V_Amigos.this.setVisible(false);
+				new VListaUsuarios(u, BaseDeDatos.verTodosUsuarios(), j).setVisible(true);
+				VAmigos.this.setVisible(false);
 			}
 		});
 
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new V_principal(u, BaseDeDatos.verTodosUsuarios(),BaseDeDatos.verTodosJuegos()).setVisible(true);
-				V_Amigos.this.setVisible(false);
+				VAmigos.this.setVisible(false);
 			}
 		});
 
 		btnAinadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
 				JFrame f;
 				f = new JFrame();
-				if (u.getJuegosComprados().size()==0) {
-					int seleccion = JOptionPane.showOptionDialog(f,
-							"Deseas solicitar " + juegos.getSelectedValue().toString() + " a "
-									+ listamigos.getSelectedValue().toString() + "?",
-							"Solicitar " + juegos.getSelectedValue().toString(), JOptionPane.YES_NO_CANCEL_OPTION,
-							JOptionPane.QUESTION_MESSAGE, null, new Object[] { "Si", "No" }, // null para YES, NO y
-																								// CANCEL
-							"opcion 1");
-
-					if (seleccion != -1 && seleccion == 0) {
-
-						JFrame x = new JFrame();
-						JOptionPane.showMessageDialog(x, "Has solicitado a " + listamigos.getSelectedValue().toString()
-								+ " " + juegos.getSelectedValue().toString());
-						for (int z = 0; z < j.size(); z++) {
-							if (juegos.getSelectedValue().toString().equals(j.get(z).getNombre())) {
-								u.setJuegosComprados(0, nuevoJuego(juegos.getSelectedValue().toString(), j));
-								u.setNumeroDeJuegos(u.getJuegosComprados().size());
-								System.out.println(u.getJuegosComprados().size());
-							}
-						}
-
-					}
-
-				} else {
-					for (int i = 0; i < u.getJuegosComprados().size(); i++) {
-						if (!(u.getJuegosComprados().get(i).getNombre().equals(juegos.getSelectedValue().toString()))) {
+				if (BaseDeDatos.juegos(u).size() != 0) {
+					for (int i = 0; i < BaseDeDatos.juegos(u).size(); i++) {
+						if (!(BaseDeDatos.juegos(u).get(i).equals(juegos.getSelectedValue().toString()))) {
 							int seleccion = JOptionPane.showOptionDialog(f,
 									"Deseas solicitar " + juegos.getSelectedValue().toString() + " a "
 											+ listamigos.getSelectedValue().toString() + "?",
@@ -117,18 +97,16 @@ public class V_Amigos extends JFrame {
 									"opcion 1");
 
 							if (seleccion != -1 && seleccion == 0) {
-
-								JFrame x = new JFrame();
-								JOptionPane.showMessageDialog(x,
-										"Has solicitado a " + listamigos.getSelectedValue().toString() + " "
-												+ juegos.getSelectedValue().toString());
+								JOptionPane.showMessageDialog(f, "Has solicitado a "+listamigos.getSelectedValue().toString()+" "
+												+juegos.getSelectedValue().toString());
 								for (int q = 0; q < j.size(); q++) {
 									if (j.get(q).getNombre().equals(listamigos.getSelectedValue().toString())) {
-										u.setNumeroDeJuegos(u.getJuegosComprados().size());
-										u.setJuegosComprados(u.getJuegosComprados().size(),
-												nuevoJuego(juegos.getSelectedValue().toString(), j));
-										System.out.println("Segundo "+ u.getJuegosComprados().size());
-										
+										try {
+											BaseDeDatos.nuevoJuego(u, nuevoJuego(juegos.getSelectedValue().toString(), j));
+										} catch (SQLException e) {
+											e.printStackTrace();
+										}
+										//new Biblioteca().ainadirJuego(u, juegos.getSelectedIndex());
 									}
 								}
 
@@ -137,6 +115,33 @@ public class V_Amigos extends JFrame {
 							JOptionPane.showMessageDialog(f, "Ya tienes " + juegos.getSelectedValue().toString());
 						}
 					}
+
+				} else {
+					int seleccion = JOptionPane.showOptionDialog(f,
+							"Deseas solicitar " + juegos.getSelectedValue().toString() + " a "
+									+ listamigos.getSelectedValue().toString() + "?",
+							"Solicitar " + juegos.getSelectedValue().toString(), JOptionPane.YES_NO_CANCEL_OPTION,
+							JOptionPane.QUESTION_MESSAGE, null, new Object[] { "Si", "No" }, // null para YES, NO y
+																								// CANCEL
+							"opcion 1");
+
+					if (seleccion != -1 && seleccion == 0) {
+						JFrame x = new JFrame();
+						JOptionPane.showMessageDialog(x, "Has solicitado a " + listamigos.getSelectedValue().toString()
+								+ " " + juegos.getSelectedValue().toString());
+						for (int z = 0; z < j.size(); z++) {
+							if (juegos.getSelectedValue().toString().equals(j.get(z).getNombre())) {
+								try {
+									BaseDeDatos.nuevoJuego(u, nuevoJuego(juegos.getSelectedValue().toString(), j));
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						}
+
+					}
+
 				}
 			}
 		});
@@ -196,20 +201,20 @@ public class V_Amigos extends JFrame {
 
 	}
 
-	public static DefaultListModel<String> inicializarListaA(List<Usuario> list) {
+	public static DefaultListModel<String> inicializarListaA(List<String> list) {
 		DefaultListModel<String> listaBien = new DefaultListModel<String>();
 
 		for (int i = 0; i < list.size(); i++) {
-			listaBien.add(i, list.get(i).getNombre());
+			listaBien.add(i, list.get(i));
 		}
 		return listaBien;
 	}
 
-	public static DefaultListModel<String> inicializarListaJ(List<Juego> list) {
+	public static DefaultListModel<String> inicializarListaJ(List<String> list) {
 		DefaultListModel<String> listaBien = new DefaultListModel<String>();
 
 		for (int i = 0; i < list.size(); i++) {
-			listaBien.add(i, list.get(i).getNombre());
+			listaBien.add(i, list.get(i));
 		}
 		return listaBien;
 	}

@@ -13,11 +13,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import base_de_datos.BaseDeDatos;
+
+import baseDeDatos.BaseDeDatos;
 import datos.Juego;
 import datos.Usuario;
 
-public class V_Admin extends JFrame {
+public class VAdmin extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField nombre;
@@ -27,7 +28,7 @@ public class V_Admin extends JFrame {
 	private String[] categorias = { "Todos", "Deportes", "Aventura", "Estrategia", "Acción" };
 	private final ArrayList<String> aCategorias = new ArrayList<String>();
 
-	public V_Admin(Usuario u, List<Usuario> users, List<Juego>j ) {
+	public VAdmin(Usuario u, List<Usuario> users, List<Juego>j ) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(Toolkit.getDefaultToolkit().getScreenSize().width / 3,
 				Toolkit.getDefaultToolkit().getScreenSize().height / 2);
@@ -179,8 +180,7 @@ public class V_Admin extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				new V_principal(u, BaseDeDatos.verTodosUsuarios(),BaseDeDatos.verTodosJuegos()).setVisible(true);
-				V_Admin.this.dispose();
+				VAdmin.this.dispose();
 			}
 		});
 	}

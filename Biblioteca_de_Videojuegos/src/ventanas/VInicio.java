@@ -3,19 +3,20 @@ package ventanas;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.*;
 
-import base_de_datos.*;
+import datos.Gestion;
 import datos.Usuario;
 
-public class V_inicio extends JFrame {
+public class VInicio extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField nombre;
 	private JPasswordField password;
 	
-	public V_inicio() {
+	public VInicio() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(Toolkit.getDefaultToolkit().getScreenSize().width / 2,
 				Toolkit.getDefaultToolkit().getScreenSize().height / 4);
@@ -27,7 +28,6 @@ public class V_inicio extends JFrame {
 	}
 
 	private void componentes() {
-		// Contenedores
 		JPanel panelTexto = new JPanel();
 		panelTexto.setLayout(new GridBagLayout());
 		JPanel panelBotones = new JPanel(new FlowLayout());
@@ -93,29 +93,27 @@ public class V_inicio extends JFrame {
 		bRegistrar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				V_inicio.this.setVisible(false);
-				new V_registro();
+				VInicio.this.setVisible(false);
+				new VRegistro();
 			}
 		});
 		bIniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				char[] contra = password.getPassword();
-				String contr = new String(contra);
-				if(nombre.getText().isBlank() || contr.length()==0) {
-					JOptionPane.showMessageDialog(null, "Escriba en todos los parametros", "Error", JOptionPane.ERROR_MESSAGE);
-				} else {
-					Usuario iniciar = new Usuario(nombre.getText(), contr);
-					Usuario inicio = BaseDeDatos.comprobarLogin(iniciar);
-					new V_principal(inicio, BaseDeDatos.verTodosUsuarios(), BaseDeDatos.verTodosJuegos()).setVisible(true);
-					V_inicio.this.setVisible(false);
+				Usuario inicio = null;
+				try {
+					inicio = Gestion.comprobarLogin(nombre, password);
+				} catch (NullPointerException | SQLException e1) {
+					e1.printStackTrace();
 				}
+				new VPrincipal(inicio, Gestion.todosLosUsuarios(), Gestion.todosLosJuegos()).setVisible(true);
+				VInicio.this.setVisible(false);
 			}
 		});
 		
 		bAtras.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				V_inicio.this.dispose();
+				VInicio.this.dispose();
 			}
 		});
 		

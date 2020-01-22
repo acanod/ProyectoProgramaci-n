@@ -2,8 +2,9 @@ package main;
 
 import java.awt.EventQueue;
 
-import base_de_datos.BaseDeDatos;
-import ventanas.V_inicio;
+import baseDeDatos.BaseDeDatos;
+
+import ventanas.VInicio;
 
 public class Main {
 	
@@ -12,7 +13,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					new V_inicio();
+					new VInicio();
 					BaseDeDatos.conectarBD();
 				} catch (Exception e) {
 					e.printStackTrace();
